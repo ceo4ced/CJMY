@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-using UnityEngine;
+
 
 public class UIManager : MonoBehaviour
 {
@@ -33,4 +34,9 @@ public class UIManager : MonoBehaviour
         Application.Quit();
         // UnityEditor.EditorApplication.isPlaying = false; // Uncomment if you want to use it in the editor
     }
+    public void LoadGameScene()
+    {
+        SceneManager.LoadScene("Playground");
+    }
+
 }
