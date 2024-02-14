@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class coinCollector : MonoBehaviour
 {
@@ -17,7 +18,11 @@ public class coinCollector : MonoBehaviour
     void SetCountText()
     {
         countText.text = "" + count.ToString();
+
+
     }
         public void ReceiveCoin() { hasCoin = true;
+        count = count + 1;
+        SetCountText();
     }
 }
