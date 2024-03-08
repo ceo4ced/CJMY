@@ -16,7 +16,6 @@ public class TimerScript : MonoBehaviour
         timerText = GetComponent<TMP_Text>();
     }
 
-    private int frame = 1;
     private float timePassed = 0.0f;
     private void Update()
     {
