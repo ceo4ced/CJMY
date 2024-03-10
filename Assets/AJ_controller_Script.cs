@@ -12,6 +12,7 @@ public class AJ_controller_Script : MonoBehaviour
     public float cameraRotationDelay = 0.1f; // Delay in camera rotation
     public GameObject SprayCan;
     public GameObject GreenSpray;
+    public GameObject Graffiti1;
     public Transform cameraTransform; // Reference to the main camera's transform
 
     private CharacterController controller;
@@ -24,6 +25,7 @@ public class AJ_controller_Script : MonoBehaviour
     void Start()
     {
         // Disable the spray can GameObject initially
+        DeactivateGraffiti1();
         DeactivateGreenSpray();
         DeactivateSprayCan();
         controller = GetComponent<CharacterController>();
@@ -218,6 +220,18 @@ public class AJ_controller_Script : MonoBehaviour
     void DeactivateSprayCan()
     {
         SprayCan.SetActive(false);
+    }
+
+    // Method to activate the spray can GameObject
+    void ActivateGraffiti1()
+    {
+        Graffiti1.SetActive(true);
+    }
+
+    // Method to deactivate the spray can GameObject
+    void DeactivateGraffiti1()
+    {
+        Graffiti1.SetActive(false);
     }
 
     // Function to reset the "Spray" parameter to false after the spray animation
