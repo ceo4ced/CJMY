@@ -1,39 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// using PlayerState;
 public class EnemyVision : MonoBehaviour
 {
-    Ray sightRay;
-    RaycastHit hit;
-    public float sightRange =  5;
-    // Start is called before the first frame update
-    void Start()
+    public enum CopState
     {
-        // Vector3 direction = new Vector3(0, 0, 1);
-        // sightRay = new Ray(transform.position, transform.TransformDirection(Vector3.forward * sightRange));
-        // Debug.DrawRay(transform.position, transform.TransformDirection(direction * sightRange), Color.green);
-        // // CheckForPlayer1();
+        Patrol,
+        Chase
     }
 
+    public CopState currentState = CopState.Patrol;
+
+    public float sightRange = 10f;
+    float eyeOffsetX = 0.2f; // Horizontal offset for eyes from the center
+    float eyeHeight = 1.6f; // Vertical offset for eyes from the base
+
+    // Update is called once per frame
     void Update()
     {
-        
-        CheckForPlayer1();
+        switch (currentState)
+        {
+            case CopState.Patrol:
+                PatrolBehavior();
+                CheckForPlayer1();
+                break;
+            case CopState.Chase:
+                ChaseBehavior();
+                break;
+        }
     }
+
+    void PatrolBehavior()
+    {
+        // Implement your patrol logic here
+        // For example, moving along a set of waypoints or standing guard
+    }
+
+    void ChaseBehavior()
+    {
+        // Implement your chase logic here
+        // For example, moving towards the player's last known position
+    }
+
     void CheckForPlayer1()
     {
-        Vector3 currentDirection = transform.TransformDirection(Vector3.forward) * sightRange;
-        if (Physics.Raycast(transform.position, currentDirection, out hit, sightRange))
+        Vector3 leftEyePosition = transform.position + transform.right * -eyeOffsetX + Vector3.up * eyeHeight;
+        Vector3 rightEyePosition = transform.position + transform.right * eyeOffsetX + Vector3.up * eyeHeight;
+        Vector3 sightDirection = transform.TransformDirection(Vector3.forward) * sightRange;
+
+        RaycastHit hit;
+        // Perform raycasts from both "eyes"
+        if (Physics.Raycast(leftEyePosition, sightDirection, out hit, sightRange) || Physics.Raycast(rightEyePosition, sightDirection, out hit, sightRange))
         {
             if (hit.collider.CompareTag("Player"))
             {
-                Debug.Log("I see you");
+                PlayerState playerState = hit.collider.GetComponent<PlayerState>();
+                // Check if the player is in the spraying state
+                if (playerState != null && playerState.currentState == PlayerState.State.Spraying)
+                {
+                    Debug.Log("Cop sees the player spraying!");
+                    currentState = CopState.Chase;
+                }
             }
         }
-        // Optionally, to visualize the ray in the Scene view while playing
-        Debug.DrawRay(transform.position, currentDirection, Color.green);
+        Debug.DrawRay(leftEyePosition, sightDirection, Color.red);
+        Debug.DrawRay(rightEyePosition, sightDirection, Color.blue);
     }
-
-
 }
+
+
