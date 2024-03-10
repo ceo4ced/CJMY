@@ -158,13 +158,14 @@ public class AJ_controller_Script : MonoBehaviour
         // If Q key is pressed and the spray animation is not already playing, set the "Spray" boolean parameter to true
         if (Input.GetKeyDown(KeyCode.Q) && !animator.GetCurrentAnimatorStateInfo(0).IsName("AJ Spray"))
         {
-            animator.SetBool("Spray", true);
-            // Disable the CharacterController component to freeze character movement during spray animation
-            controller.enabled = false;
             // Freeze position in all axes, but allow rotation
             rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
             rb.constraints |= RigidbodyConstraints.FreezeRotation;
 
+            animator.SetBool("Spray", true);
+            // Disable the CharacterController component to freeze character movement during spray animation
+            controller.enabled = false;
+            
             // Disable input
             allowInput = false;
         }
