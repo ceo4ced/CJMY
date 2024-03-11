@@ -62809,6 +62809,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 5.0333333
+    functionName: ActivateGraffiti1
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 5.5666666
     functionName: DeactivateSprayCan
     data: 
