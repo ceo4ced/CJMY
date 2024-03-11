@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
     }
     public void LoadGameScene()
     {
-        SceneManager.LoadScene("Simpletown_DemoScene");
+        SceneManager.LoadScene("SimpleTown_DemoScene");
     }
 
 }
