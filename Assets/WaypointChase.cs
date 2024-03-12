@@ -50,7 +50,7 @@ public class WaypointChase : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && !isChasing)
         {
             StartChasing();
-            SetPlayerIsAttacking(true);
+            //SetPlayerIsAttacking(true);
         }
     }
 
@@ -67,11 +67,11 @@ public class WaypointChase : MonoBehaviour
         isChasing = true;
     }
 
-    void SetPlayerIsAttacking(bool value)
-    {
-        if (playerAnimator != null)
-        {
-            playerAnimator.SetBool("IsAttacking", value);
-        }
-    }
+    //    void SetPlayerIsAttacking(bool value)
+    //    {
+    //        if (playerAnimator != null)
+    //        {
+    //            playerAnimator.SetBool("IsAttacking", value);
+    //        }
+    //    }
 }
