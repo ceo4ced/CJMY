@@ -15,7 +15,7 @@ public class CollectableSprayCanSript : MonoBehaviour
         {
             sprayCanCollector cc = c.gameObject.GetComponent<sprayCanCollector>();
             Debug.Log("Spray Can Pickup");
-            cc.ReceiveCan();
+            //cc.ReceiveCan(); // throws Null pointer will fix after alpha
                 
             Destroy(this.gameObject);
 
