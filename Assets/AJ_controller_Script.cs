@@ -19,7 +19,7 @@ public class AJ_controller_Script : MonoBehaviour
     private Animator animator;
     private Rigidbody rb; // Reference to the Rigidbody component
     private Vector3 lastPlayerPosition; // Last position of the player
-    private float transitionSpeed = 100f;
+    // private float transitionSpeed = 100f;
     private bool allowInput = true; // Variable to control whether input is allowed or not
 
     void Start()
