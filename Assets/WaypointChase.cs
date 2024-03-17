@@ -10,11 +10,26 @@ public class WaypointChase : MonoBehaviour
     private bool isChasing = false;
     public GameObject[] waypoints;
     private int currentWaypoint = 0;
-    private Animator playerAnimator;
+    private Animator copAnimator; // Animator component of the character with IsChasing parameter
+    private AJ_controller_Script ajController; // Reference to AJ_controller_Script
+
+    // Define the name of the boolean parameter in the Animator controller
+    private const string isChasingParam = "IsChasing";
+
+    // Define speeds for walking and running
+    public float walkingSpeed = 3f;
+    public float runningSpeed = 6f;
 
     void Start()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+
+        // Find the GameObject with the "Cop" tag
+        GameObject copCharacter = GameObject.FindGameObjectWithTag("Cop");
+
+        // Get the Animator component from the Cop GameObject
+        copAnimator = copCharacter.GetComponent<Animator>();
+
 
         // Disable renderers of all waypoints at the start
         foreach (GameObject waypoint in waypoints)
@@ -23,10 +38,22 @@ public class WaypointChase : MonoBehaviour
         }
 
         SetNextWaypoint();
+
+        // Get reference to AJ_controller_Script
+        ajController = GameObject.FindGameObjectWithTag("Player").GetComponent<AJ_controller_Script>();
+
+        // Set initial speed to walking speed
+        agent.speed = walkingSpeed;
     }
 
     void Update()
     {
+        // Check if the player is in the spraying state to start chasing
+        if (ajController.currentState == AJ_controller_Script.PlayerState.Spraying && !isChasing)
+        {
+            StartChasing();
+        }
+
         if (!isChasing)
         {
             if (waypoints.Length == 0)
@@ -43,14 +70,10 @@ public class WaypointChase : MonoBehaviour
             if (playerTransform != null)
             {
                 agent.SetDestination(playerTransform.position);
-            }
-        }
 
-        // Check if Q key is pressed to start chasing
-        if (Input.GetKeyDown(KeyCode.Q) && !isChasing)
-        {
-            StartChasing();
-            SetPlayerIsAttacking(true);
+                // Change speed to running speed when chasing
+                agent.speed = runningSpeed;
+            }
         }
     }
 
@@ -58,20 +81,17 @@ public class WaypointChase : MonoBehaviour
     {
         currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
         agent.SetDestination(waypoints[currentWaypoint].transform.position);
+
+        // Set speed back to walking speed when reaching a waypoint
+        agent.speed = walkingSpeed;
     }
 
     void StartChasing()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        playerAnimator = playerTransform.GetComponent<Animator>();
         isChasing = true;
-    }
 
-    void SetPlayerIsAttacking(bool value)
-    {
-        if (playerAnimator != null)
-        {
-            playerAnimator.SetBool("IsAttacking", value);
-        }
+        // Set the boolean parameter in the Animator controller to true
+        copAnimator.SetBool(isChasingParam, true);
     }
 }
