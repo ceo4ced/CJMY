@@ -16,7 +16,7 @@ public class itemCollector : MonoBehaviour
     }
     void SetCountText()
     {
-        countText.text = "" + itemCount.ToString();
+        countText.text = "Count: " + itemCount.ToString();
 
 
     }
