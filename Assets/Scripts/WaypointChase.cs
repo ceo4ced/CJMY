@@ -71,9 +71,17 @@ public class WaypointChase : MonoBehaviour
             {
                 agent.SetDestination(playerTransform.position);
 
+<<<<<<< HEAD:Assets/Scripts/WaypointChase.cs
                 // Change speed to running speed when chasing
                 agent.speed = runningSpeed;
             }
+=======
+        // Check if Q key is pressed to start chasing
+        if (Input.GetKeyDown(KeyCode.Q) && !isChasing)
+        {
+            StartChasing();
+            //SetPlayerIsAttacking(true);
+>>>>>>> da2653d2fb559b00056a25e19a69912c3af40f56:Assets/WaypointChase.cs
         }
     }
 
@@ -91,7 +99,18 @@ public class WaypointChase : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         isChasing = true;
 
+<<<<<<< HEAD:Assets/Scripts/WaypointChase.cs
         // Set the boolean parameter in the Animator controller to true
         copAnimator.SetBool(isChasingParam, true);
     }
 }
+=======
+    //    void SetPlayerIsAttacking(bool value)
+    //    {
+    //        if (playerAnimator != null)
+    //        {
+    //            playerAnimator.SetBool("IsAttacking", value);
+    //        }
+    //    }
+}
+>>>>>>> da2653d2fb559b00056a25e19a69912c3af40f56:Assets/WaypointChase.cs
