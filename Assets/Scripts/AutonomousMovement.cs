@@ -2,10 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-<<<<<<< HEAD:Assets/Scripts/AutonomousMovement.cs
-
-=======
->>>>>>> da2653d2fb559b00056a25e19a69912c3af40f56:Assets/AutonomousMovement.cs
 public class AutonomousMovement : MonoBehaviour
 {
     public float walkSpeed = 3f;
