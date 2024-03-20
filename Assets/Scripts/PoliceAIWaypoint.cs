@@ -31,12 +31,15 @@ public class PoliceAIWaypoint : MonoBehaviour
 
     // State
     private bool isAttacking = false;
+    private AJ_controller_Script ajController;
 
     void Start()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         // Find the GameObject with the "Cop" tag
         GameObject copCharacter = GameObject.FindGameObjectWithTag("Cop");
+
+        ajController = GameObject.FindGameObjectWithTag("Player").GetComponent<AJ_controller_Script>();
 
         // Get the Animator component from the Cop GameObject
         copAnimator = copCharacter.GetComponent<Animator>();
@@ -88,33 +91,6 @@ public class PoliceAIWaypoint : MonoBehaviour
         }
     }
 
-    // bool CheckForCrime()
-    // {
-    //     Vector3 leftEyePosition = transform.position + transform.right * -eyeOffsetX + Vector3.up * eyeHeight;
-    //     Vector3 rightEyePosition = transform.position + transform.right * eyeOffsetX + Vector3.up * eyeHeight;
-    //     Vector3 sightDirection = transform.forward * sightRange;
-
-    //     RaycastHit hit;
-    //     if (Physics.Raycast(leftEyePosition, sightDirection, out hit, sightRange) || Physics.Raycast(rightEyePosition, sightDirection, out hit, sightRange))
-    //     {
-    //         if (hit.collider.CompareTag("Player"))
-    //         {
-    //             // Assuming PlayerState script or similar is attached to the player
-    //             PlayerState playerState = hit.collider.GetComponent<PlayerState>();
-    //             if (playerState != null && playerState.currentState == PlayerState.State.Spraying)
-    //             {
-    //                 return true;
-    //             }
-    //         }
-    //     }
-
-    //     Debug.DrawRay(leftEyePosition, sightDirection, Color.red);
-    //     Debug.DrawRay(rightEyePosition, sightDirection, Color.blue);
-
-    //     return false;
-    // }
-
-
     bool CheckForCrime()
     {
         float eyeHeight = 1.6f; // Height of the eyes from the base
@@ -138,8 +114,9 @@ public class PoliceAIWaypoint : MonoBehaviour
                 
                 if (hit.collider.CompareTag("Player"))
                 {
-                    PlayerState playerState = hit.collider.GetComponent<PlayerState>();
-                    if (playerState != null && playerState.currentState == PlayerState.State.Spraying)
+                    
+                    // PlayerState playerState = hit.collider.GetComponent<PlayerState>();
+                    if (ajController.currentState == AJ_controller_Script.PlayerState.Spraying)
                     {
                         crimeDetected = true;
                         break; // Stop checking if a crime is detected
@@ -173,12 +150,14 @@ public class PoliceAIWaypoint : MonoBehaviour
 
     void StartChasing()
     {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         isChasing = true;
         copAnimator.SetBool(isChasingParam, true);
     }
 
     void StopChasing()
     {
+        playerTransform = null;
         isChasing = false;
         copAnimator.SetBool(isChasingParam, false);
         agent.speed = walkingSpeed;
