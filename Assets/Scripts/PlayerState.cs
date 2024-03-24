@@ -6,11 +6,11 @@ public class PlayerState : MonoBehaviour
 {
     public enum State
     {
-        Walking,
+        Normal,
         Spraying
     }
 
-    public State currentState = State.Walking;
+    public State currentState = State.Normal;
 
     // Call this method to change the player's state
     public void ChangeState(State newState)

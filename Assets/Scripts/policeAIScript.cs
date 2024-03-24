@@ -17,8 +17,11 @@ public class policeAIScript : MonoBehaviour
     private Transform visionOrigin;
     public float sightRange = 15;
     public float attackRange = 2;
-    private bool playerInSightRange = false;
-    private bool sawPlayer = false;
+    float eyeOffsetX = 0.2f; // Horizontal offset for eyes from the center
+    float eyeHeight = 1.6f; // Vertical offset for eyes from the base
+
+    // private bool playerInSightRange = false;
+    private bool sawCrime = false;
     private bool playerInAttackRange = false;
     // Start is called before the first frame update
     void Start()
@@ -37,40 +40,70 @@ public class policeAIScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayerMask);
-        if (playerInSightRange)
+        if (CheckForCrime())
         {
-            RaycastHit hit;
-            Physics.Linecast(visionOrigin.position, new Vector3(player.position.x, player.position.y + .5f, player.position.z), out hit);
-            Debug.DrawLine(visionOrigin.position, new Vector3(player.position.x, player.position.y + .5f, player.position.z));
-            Debug.Log(hit.point);
-            Debug.Log(hit.collider.gameObject.tag);
-            if (!sawPlayer)
-            {
-                sawPlayer = hit.collider.gameObject.CompareTag("Player");
-            }
-            Debug.Log(sawPlayer);
-
+            Debug.Log("Player is spraying!");
+            sawCrime = true;
         }
         else
         {
-            sawPlayer = false;
+            Debug.Log("Player is not spraying!");
+            sawCrime = false;
         }
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayerMask);
 
-        if (playerInAttackRange)
-        {
-            Attacking();
-        }
-        else if (sawPlayer)
+        if (sawCrime)
         {
             Chasing();
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayerMask);
+            if (playerInAttackRange)
+            {
+                Attacking();
+            }
         }
         else
         {
             Roaming();
         }
     }
+
+
+
+    // void Update2()
+    // {
+    //     playerInSightRange = Physics.CheckSphere(transform.position, sightRange, playerLayerMask);
+    //     if (playerInSightRange)
+    //     {
+    //         RaycastHit hit;
+    //         Physics.Linecast(visionOrigin.position, new Vector3(player.position.x, player.position.y + .5f, player.position.z), out hit);
+    //         Debug.DrawLine(visionOrigin.position, new Vector3(player.position.x, player.position.y + .5f, player.position.z));
+    //         Debug.Log(hit.point);
+    //         Debug.Log(hit.collider.gameObject.tag);
+    //         if (!sawPlayer)
+    //         {
+    //             sawPlayer = hit.collider.gameObject.CompareTag("Player");
+    //         }
+    //         Debug.Log(sawPlayer);
+
+    //     }
+    //     else
+    //     {
+    //         sawPlayer = false;
+    //     }
+    //     playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayerMask);
+
+    //     if (playerInAttackRange)
+    //     {
+    //         Attacking();
+    //     }
+    //     else if (sawPlayer)
+    //     {
+    //         Chasing();
+    //     }
+    //     else
+    //     {
+    //         Roaming();
+    //     }
+    // }
 
 
     private void Roaming()
@@ -98,5 +131,34 @@ public class policeAIScript : MonoBehaviour
         animator.SetBool("isChasing", false);
         animator.SetFloat("Speed", 0);
     }
+
+    bool CheckForCrime()
+    {
+        Vector3 leftEyePosition = transform.position + transform.right * -eyeOffsetX + Vector3.up * eyeHeight;
+        Vector3 rightEyePosition = transform.position + transform.right * eyeOffsetX + Vector3.up * eyeHeight;
+        Vector3 sightDirection = transform.TransformDirection(Vector3.forward) * sightRange;
+
+        RaycastHit hit;
+        // Perform raycasts from both "eyes"
+        if (Physics.Raycast(leftEyePosition, sightDirection, out hit, sightRange) || Physics.Raycast(rightEyePosition, sightDirection, out hit, sightRange))
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                PlayerState playerState = hit.collider.GetComponent<PlayerState>();
+                // Check if the player is in the spraying state
+                if (playerState != null && playerState.currentState == PlayerState.State.Spraying)
+                {
+                    Debug.Log("Cop sees the player spraying!");
+                    // currentState = CopState.Chase;
+                    return true;
+                }
+            }
+        }
+        Debug.DrawRay(leftEyePosition, sightDirection, Color.red);
+        Debug.DrawRay(rightEyePosition, sightDirection, Color.blue);
+
+        return false;
+    }
+
 
 }
