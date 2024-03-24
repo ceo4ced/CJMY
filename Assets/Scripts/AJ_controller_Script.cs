@@ -25,6 +25,7 @@ public class AJ_controller_Script : MonoBehaviour
     public GameObject BlueSpray;
     public GameObject RedSpray;
     public GameObject Graffiti1;
+    public Transform AllGraffiti;
     public Transform cameraTransform; // Reference to the main camera's transform
 
     private CharacterController controller;
@@ -40,6 +41,9 @@ public class AJ_controller_Script : MonoBehaviour
     {
         // Disable the spray can GameObject initially
         DeactivateGraffiti1();
+
+        // Disable all tutorial Graffiti
+        DeactivateAllGraffiti();
         DeactivateGreenSpray();
         DeactivateSprayCan();
         
@@ -231,9 +235,6 @@ public class AJ_controller_Script : MonoBehaviour
         GreenSpray.SetActive(false);
         RedSpray.SetActive(false);
         BlueSpray.SetActive(false);
-        hasGreenCan = false;
-        hasBlueCan = false;
-        hasRedCan = false;
         EmptyItemInBag();
     }
 
@@ -264,7 +265,31 @@ public class AJ_controller_Script : MonoBehaviour
 
     void ActivateGraffiti1()
     {
-        Graffiti1.SetActive(true);
+        GameObject graffitiToColor = retrieveClosestValidGraffiti();
+        if (hasBlueCan)
+        {
+            //do blue things
+            SpriteRenderer spriteRenderer = graffitiToColor.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = Color.blue;
+            graffitiToColor.SetActive(true);
+        }
+        if (hasRedCan)
+        {
+            // do red things
+            SpriteRenderer spriteRenderer = graffitiToColor.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = Color.red;
+            graffitiToColor.SetActive(true);
+        }
+        if (hasGreenCan)
+        {
+            // do green things
+            SpriteRenderer spriteRenderer = graffitiToColor.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = Color.green;
+            graffitiToColor.SetActive(true);
+        }
+        hasBlueCan = false;
+        hasRedCan = false;
+        hasGreenCan = false;
     }
 
     void DeactivateGraffiti1()
@@ -272,6 +297,32 @@ public class AJ_controller_Script : MonoBehaviour
         Graffiti1.SetActive(false);
     }
 
+    void DeactivateAllGraffiti()
+    {
+        print(AllGraffiti.childCount);
+        foreach (Transform graffiti in AllGraffiti) {
+            graffiti.gameObject.SetActive(false);
+        }
+    }
+
+    /**
+     * Retrieve the graffiti GameObject that is closest within a certain range.
+     */
+    GameObject retrieveClosestValidGraffiti()
+    {
+        GameObject closestValidGraffiti = null;
+        float shortestDistance = float.MaxValue;
+        foreach (Transform graffiti in AllGraffiti)
+        {
+            float distance = Vector3.Distance(graffiti.position, this.transform.position);
+            if(distance < 10.0f && distance < shortestDistance)
+            {
+                shortestDistance = distance;
+                closestValidGraffiti = graffiti.gameObject;
+            }
+        }
+        return closestValidGraffiti;
+    }
     public void ResetSprayParameter()
     {
         animator.SetBool("Spray", false);
