@@ -13,7 +13,7 @@ public class itemPickup : MonoBehaviour
             itemCollector cc = c.gameObject.GetComponent<itemCollector>();
             if (cc != null && !cc.HasItem()) // Check if the player does not already have an item
             {
-                cc.RecieveItem(itemTag); // Pass the item tag to the itemCollector
+                cc.ReceiveItem(itemTag); // Pass the item tag to the itemCollector
                 AJ_controller_Script ajController = c.gameObject.GetComponent<AJ_controller_Script>();
                 if (ajController != null)
                 {
