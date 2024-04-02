@@ -20,14 +20,25 @@ public class itemCollector : MonoBehaviour
 
     void SetCountText()
     {
-        countText.text = "Currently Held Color: " + currentColor;
+        countText.text = "Spraycan Held: " + currentColor;
     }
     public void ReceiveItem(string itemTag)
     {
         if (!hasItem)
         {
             hasItem = true;
-            currentColor = itemTag;
+            if (itemTag == "redCan")
+            {
+                currentColor = "Red";
+            }
+            else if (itemTag == "blueCan")
+            {
+                currentColor = "Blue";
+            }
+            else if (itemTag == "greenCan")
+            {
+                currentColor = "Green";
+            }
             SetCountText();
         }
     }
