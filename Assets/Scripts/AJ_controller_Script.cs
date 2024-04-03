@@ -27,6 +27,8 @@ public class AJ_controller_Script : MonoBehaviour
     public GameObject Graffiti1;
     public Transform AllGraffiti;
     public Transform cameraTransform; // Reference to the main camera's transform
+    public GameObject TutorialText;
+    public GameObject ObjectiveText;
 
     private CharacterController controller;
     private Animator animator;
@@ -260,6 +262,10 @@ public class AJ_controller_Script : MonoBehaviour
         GreenCan.SetActive(false);
         BlueCan.SetActive(false);
         RedCan.SetActive(false);
+        hasBlueCan = false;
+        hasRedCan = false;
+        hasGreenCan = false;
+        EmptyItemInBag();
     }
 
 
@@ -287,9 +293,8 @@ public class AJ_controller_Script : MonoBehaviour
             spriteRenderer.color = Color.green;
             graffitiToColor.SetActive(true);
         }
-        hasBlueCan = false;
-        hasRedCan = false;
-        hasGreenCan = false;
+        TutorialText.GetComponent<TMPro.TextMeshPro>().text = "Great job!\nNow go and complete your first objective.";
+        ObjectiveText.GetComponent<TMPro.TextMeshProUGUI>().text = "Objective:\nHead to the main square";
     }
 
     void DeactivateGraffiti1()
