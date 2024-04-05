@@ -24,6 +24,8 @@ public class PoliceAIWaypoint : MonoBehaviour
     private Animator copAnimator; 
     private const string isChasingParam = "IsChasing";
     private const string isAttackingParam = "IsAttacking"; // Assuming there's an 'IsAttacking' animation parameter
+    private float nextTurnTime = 0f;
+    private bool isTurning = false;
 
     // Speeds
     public float walkingSpeed = 3f;
@@ -82,7 +84,30 @@ public class PoliceAIWaypoint : MonoBehaviour
             if (!isChasing)
             {
                 // PatrolWaypoints();
-                SetNextWaypoint();
+                if (!isTurning && Time.time >= nextTurnTime)
+                {
+                    isTurning = true;
+                    nextTurnTime = Time.time + 2.30f; // Set next turn time
+                    int rand = Random.Range(0, 11); // Random number between 0 and 10
+                    if (rand == 5)
+                    {
+                        // Set IsTurning parameter to 5 to trigger turn animation
+                        copAnimator.SetInteger("IsTurning", rand);
+                        // Stop chasing waypoint during turn
+                        agent.ResetPath();
+                    }
+                    else
+                    {
+                        // Set IsTurning parameter to 0 for no turn
+                        copAnimator.SetInteger("IsTurning", 0);
+                    }
+                }
+                else if (isTurning && Time.time >= nextTurnTime)
+                {
+                    // Turn finished, resume patrolling
+                    isTurning = false;
+                    SetNextWaypoint();
+                }
             }
             else
             {

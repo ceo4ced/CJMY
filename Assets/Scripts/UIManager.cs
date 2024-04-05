@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     public GameObject mainMenu;
-    // public GameObject characterMenu;
+    public GameObject manualMenu;
 
     void Start()
     {
@@ -21,11 +21,11 @@ public class UIManager : MonoBehaviour
         // characterMenu.SetActive(false);
     }
 
-    // Call this to show Character Menu and hide Main Menu
-    public void ShowCharacterMenu()
+    // Call this to show Manual Menu and hide Main Menu
+    public void ShowManualMenu()
     {
         mainMenu.SetActive(false);
-        // characterMenu.SetActive(true);
+        manualMenu.SetActive(true);
     }
 
     // Call this to quit the game (works in built games, not in the editor)
@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
     }
     public void LoadGameScene()
     {
-        SceneManager.LoadScene("SimpleTown_DemoScene");
+        SceneManager.LoadScene("TESTCREATENEWSCENE");
     }
 
 }

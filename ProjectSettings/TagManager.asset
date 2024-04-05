@@ -6,6 +6,9 @@ TagManager:
   tags:
   - CinemachineTarget
   - Cop
+  - redCan
+  - blueCan
+  - greenCan
   layers:
   - Default
   - TransparentFX

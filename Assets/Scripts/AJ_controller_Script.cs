@@ -18,23 +18,37 @@ public class AJ_controller_Script : MonoBehaviour
     public float turnSpeedIdle = 1f; // Rotation speed for the player when idle turning
     public float turnSpeedRunning = 10f; // Rotation speed for the player when running
     public float cameraRotationDelay = 0.1f; // Delay in camera rotation
-    public GameObject SprayCan;
+    public GameObject GreenCan;
+    public GameObject BlueCan;
+    public GameObject RedCan;
     public GameObject GreenSpray;
+    public GameObject BlueSpray;
+    public GameObject RedSpray;
     public GameObject Graffiti1;
+    public Transform AllGraffiti;
     public Transform cameraTransform; // Reference to the main camera's transform
+    public GameObject TutorialText;
+    public GameObject ObjectiveText;
 
     private CharacterController controller;
     private Animator animator;
     private Rigidbody rb; // Reference to the Rigidbody component
     private Vector3 lastPlayerPosition; // Last position of the player
     private bool allowInput = true; // Variable to control whether input is allowed or not
+    private bool hasRedCan;
+    private bool hasBlueCan;
+    private bool hasGreenCan;
 
     void Start()
     {
         // Disable the spray can GameObject initially
         DeactivateGraffiti1();
+
+        // Disable all tutorial Graffiti
+        DeactivateAllGraffiti();
         DeactivateGreenSpray();
         DeactivateSprayCan();
+        
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -149,8 +163,8 @@ public class AJ_controller_Script : MonoBehaviour
             controller.Move(inputDirection * speed * Time.deltaTime);
             lastPlayerPosition = transform.position;
         }
-
-        if (Input.GetKeyDown(KeyCode.Q) && !animator.GetCurrentAnimatorStateInfo(0).IsName("AJ Spray"))
+      
+        if (Input.GetKeyDown(KeyCode.Q) && !animator.GetCurrentAnimatorStateInfo(0).IsName("AJ Spray") && (hasRedCan || hasGreenCan || hasBlueCan))
         {
             SwitchToSprayingState();
         }
@@ -204,27 +218,83 @@ public class AJ_controller_Script : MonoBehaviour
 
     void ActivateGreenSpray()
     {
-        GreenSpray.SetActive(true);
+        if (hasGreenCan)
+        {
+            GreenSpray.SetActive(true);
+        }
+        if (hasBlueCan)
+        {
+            BlueSpray.SetActive(true);
+        }
+        if (hasRedCan) 
+        {
+            RedSpray.SetActive(true);
+        }
     }
 
     void DeactivateGreenSpray()
     {
         GreenSpray.SetActive(false);
+        RedSpray.SetActive(false);
+        BlueSpray.SetActive(false);
+        EmptyItemInBag();
     }
+
 
     void ActivateSprayCan()
     {
-        SprayCan.SetActive(true);
+        if (hasGreenCan)
+        {
+            GreenCan.SetActive(true);
+        }
+        else if (hasRedCan)
+        {
+            RedCan.SetActive(true);
+        }
+        else if (hasBlueCan)
+        {
+            BlueCan.SetActive(true);
+        }
     }
 
     void DeactivateSprayCan()
     {
-        SprayCan.SetActive(false);
+        GreenCan.SetActive(false);
+        BlueCan.SetActive(false);
+        RedCan.SetActive(false);
+        hasBlueCan = false;
+        hasRedCan = false;
+        hasGreenCan = false;
+        EmptyItemInBag();
     }
+
 
     void ActivateGraffiti1()
     {
-        Graffiti1.SetActive(true);
+        GameObject graffitiToColor = retrieveClosestValidGraffiti();
+        if (hasBlueCan)
+        {
+            //do blue things
+            SpriteRenderer spriteRenderer = graffitiToColor.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = Color.blue;
+            graffitiToColor.SetActive(true);
+        }
+        if (hasRedCan)
+        {
+            // do red things
+            SpriteRenderer spriteRenderer = graffitiToColor.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = Color.red;
+            graffitiToColor.SetActive(true);
+        }
+        if (hasGreenCan)
+        {
+            // do green things
+            SpriteRenderer spriteRenderer = graffitiToColor.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = Color.green;
+            graffitiToColor.SetActive(true);
+        }
+        TutorialText.GetComponent<TMPro.TextMeshPro>().text = "Great job!\nNow go and complete your first objective.";
+        ObjectiveText.GetComponent<TMPro.TextMeshProUGUI>().text = "Objective:\nHead to the main square";
     }
 
     void DeactivateGraffiti1()
@@ -232,9 +302,62 @@ public class AJ_controller_Script : MonoBehaviour
         Graffiti1.SetActive(false);
     }
 
+    void DeactivateAllGraffiti()
+    {
+        print(AllGraffiti.childCount);
+        foreach (Transform graffiti in AllGraffiti) {
+            graffiti.gameObject.SetActive(false);
+        }
+    }
+
+    /**
+     * Retrieve the graffiti GameObject that is closest within a certain range.
+     */
+    GameObject retrieveClosestValidGraffiti()
+    {
+        GameObject closestValidGraffiti = null;
+        float shortestDistance = float.MaxValue;
+        foreach (Transform graffiti in AllGraffiti)
+        {
+            float distance = Vector3.Distance(graffiti.position, this.transform.position);
+            if(distance < 10.0f && distance < shortestDistance)
+            {
+                shortestDistance = distance;
+                closestValidGraffiti = graffiti.gameObject;
+            }
+        }
+        return closestValidGraffiti;
+    }
     public void ResetSprayParameter()
     {
         animator.SetBool("Spray", false);
+    }
+
+    public void SetColorItem(string itemTag)
+    {
+        switch (itemTag)
+        {
+            case "redCan":
+                hasRedCan = true;
+                break;
+            case "blueCan":
+                hasBlueCan = true;
+                break;
+            case "greenCan":
+                hasGreenCan = true;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void EmptyItemInBag()
+    {
+        itemCollector collector = GetComponent<itemCollector>();
+        if (collector != null)
+        {
+            collector.ResetItem(); // Reset the item in the item collector
+        }
     }
 
     void RotateCameraWithDelay()
