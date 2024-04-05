@@ -17,6 +17,7 @@ public class ProjectileScript : MonoBehaviour
     }
     public void Setup(Vector3 dir)
     {
+        Debug.Log(dir);
         direction = dir;
     }
     // Update is called once per frame
