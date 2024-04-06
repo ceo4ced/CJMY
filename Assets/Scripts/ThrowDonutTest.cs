@@ -5,7 +5,9 @@ using UnityEngine;
 public class ThrowDonutTest : MonoBehaviour
 {
     public GameObject heldDonut;
+
     public Transform donutProjectile;
+    
     private Transform Spawner;
 
     // Start is called before the first frame update
@@ -23,16 +25,22 @@ public class ThrowDonutTest : MonoBehaviour
 
     public void ThrowDonut()
     {
-        if (!heldDonut.activeSelf == false)
+        Debug.Log("Throw Donut");
+        // if (!heldDonut.activeSelf == false)
+        if(true)
         {
-            
+            Debug.Log("Aim Donut");
             // heldDonut.SetActive(false);
             Transform thrownDonut = Instantiate(donutProjectile, heldDonut.GetComponent<Transform>().position, Quaternion.identity);
             ProjectileScript thrownDonutProjectileScript = thrownDonut.GetComponent<ProjectileScript>();
             thrownDonutProjectileScript.Setup(Spawner.forward);
             // heldDonut.SetActive(true); //ADDED BY CEDRIC
-            Debug.Log("Thrown Donut");
+            Debug.Log("Threw Donut");
         }
+        // else 
+        // {
+        //     Debug.Log("Donut not thrown");
+        // }
     }
 
     public void StopThrowingDonut()  //ADDED BY CEDRIC

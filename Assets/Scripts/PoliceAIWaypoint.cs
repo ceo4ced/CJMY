@@ -103,7 +103,7 @@ public class PoliceAIWaypoint : MonoBehaviour
 
         agent.speed = walkingSpeed;
 
-        // throwDonutTestInstance = gameObject.AddComponent<ThrowDonutTest>();
+        throwDonutTestInstance = gameObject.AddComponent<ThrowDonutTest>();
     }
 
     void Update()
@@ -317,7 +317,7 @@ public class PoliceAIWaypoint : MonoBehaviour
     void HandleAttack()
     {
         Debug.Log("Attacking Player");
-        agent.isStopped = true; // Allow the NavMeshAgent to resume moving
+        // agent.isStopped = true; // Allow the NavMeshAgent to resume moving
         // copAnimator.SetBool(isAttackingParam, true);
         throwDonutTestInstance.ThrowDonut();
         Debug.Log("Donut Thrown");

@@ -28,9 +28,10 @@ public class ProjectileScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider c)
     {
-        Debug.Log("Collided");
+        
         if (c.CompareTag("Player"))
         {
+            Debug.Log("Collided");
             ReceiveDamageScript damageReceiver = c.GetComponent<ReceiveDamageScript>();
             damageReceiver.ReceiveDamage(direction);
         }
