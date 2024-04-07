@@ -128,9 +128,9 @@ public class PoliceAIWaypoint : MonoBehaviour
             case CopState.Arrest:
                 ArrestPlayer();
                 break;
-            case CopState.Suspicious:
-                SuspiciousBehavior();
-                break;
+            // case CopState.Suspicious:
+            //     SuspiciousBehavior();
+            //     break;
         }
 
 

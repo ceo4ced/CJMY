@@ -7,7 +7,7 @@ public class ThrowDonutTest : MonoBehaviour
     public GameObject heldDonut;
 
     public Transform donutProjectile;
-    
+
     private Transform Spawner;
 
     // Start is called before the first frame update
@@ -25,13 +25,15 @@ public class ThrowDonutTest : MonoBehaviour
 
     public void ThrowDonut()
     {
-        Debug.Log("Throw Donut");
+        Debug.Log("Throw Donut Function called");
         // if (!heldDonut.activeSelf == false)
         if(true)
         {
-            Debug.Log("Aim Donut");
+            Debug.Log("Grab Donut");
             // heldDonut.SetActive(false);
             Transform thrownDonut = Instantiate(donutProjectile, heldDonut.GetComponent<Transform>().position, Quaternion.identity);
+            
+            Debug.Log("Aim Donut");
             ProjectileScript thrownDonutProjectileScript = thrownDonut.GetComponent<ProjectileScript>();
             thrownDonutProjectileScript.Setup(Spawner.forward);
             // heldDonut.SetActive(true); //ADDED BY CEDRIC
