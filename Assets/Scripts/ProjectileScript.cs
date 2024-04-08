@@ -17,6 +17,7 @@ public class ProjectileScript : MonoBehaviour
     }
     public void Setup(Vector3 dir)
     {
+        Debug.Log(dir);
         direction = dir;
     }
     // Update is called once per frame
@@ -27,9 +28,10 @@ public class ProjectileScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider c)
     {
-        Debug.Log("Collided");
+        
         if (c.CompareTag("Player"))
         {
+            Debug.Log("Collided");
             ReceiveDamageScript damageReceiver = c.GetComponent<ReceiveDamageScript>();
             damageReceiver.ReceiveDamage(direction);
         }
