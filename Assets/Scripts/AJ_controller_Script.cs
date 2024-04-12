@@ -7,7 +7,8 @@ public class AJ_controller_Script : MonoBehaviour
     public enum PlayerState
     {
         Normal,
-        Spraying
+        Spraying,
+        Caught
     }
 
     public PlayerState currentState = PlayerState.Normal;
@@ -29,6 +30,7 @@ public class AJ_controller_Script : MonoBehaviour
     public Transform cameraTransform; // Reference to the main camera's transform
     public GameObject TutorialText;
     public GameObject ObjectiveText;
+    public AudioClip spraySound;
 
     private CharacterController controller;
     private Animator animator;
@@ -67,6 +69,9 @@ public class AJ_controller_Script : MonoBehaviour
                 break;
             case PlayerState.Spraying:
                 HandleSprayingState();
+                break;
+            case PlayerState.Caught: // Handle the Caught state
+                HandleCaughtState();
                 break;
             default:
                 break;
@@ -178,6 +183,16 @@ public class AJ_controller_Script : MonoBehaviour
         }
     }
 
+    void HandleCaughtState()
+    {
+        // Disable player movement
+        allowInput = false;
+        animator.SetFloat("VelX", 0f);
+        animator.SetFloat("VelY", 0f);
+        rb.constraints = RigidbodyConstraints.FreezeAll; // Freeze the player
+
+    }
+
     void SwitchToSprayingState()
     {
         currentState = PlayerState.Spraying;
@@ -218,6 +233,16 @@ public class AJ_controller_Script : MonoBehaviour
 
     void ActivateGreenSpray()
     {
+        AudioSource audioSource = GetComponent<AudioSource>();
+
+        // Ensure the AudioSource is set up for looping
+        if (audioSource != null && spraySound != null)
+        {
+            audioSource.clip = spraySound;
+            audioSource.loop = true; // Make sure the sound loops
+            audioSource.Play();
+        }
+
         if (hasGreenCan)
         {
             GreenSpray.SetActive(true);
@@ -226,14 +251,24 @@ public class AJ_controller_Script : MonoBehaviour
         {
             BlueSpray.SetActive(true);
         }
-        if (hasRedCan) 
+        if (hasRedCan)
         {
             RedSpray.SetActive(true);
         }
     }
 
+
     void DeactivateGreenSpray()
     {
+        AudioSource audioSource = GetComponent<AudioSource>();
+
+        // Stop the spray sound if it is playing
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+            audioSource.loop = false; // Optionally turn off looping, though it stops anyway
+        }
+
         GreenSpray.SetActive(false);
         RedSpray.SetActive(false);
         BlueSpray.SetActive(false);
@@ -349,6 +384,37 @@ public class AJ_controller_Script : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Check if the other object has the tag "cop"
+        if (other.CompareTag("Cop"))
+        {
+            // Get the PoliceAIWaypoint script from the cop
+            PoliceAIWaypoint copAI = other.GetComponent<PoliceAIWaypoint>();
+
+            // Check if the cop is in Chase, Attack, or Arrest state
+            if (copAI != null && (copAI.GetCurrentState() == PoliceAIWaypoint.CopState.Chase ||
+                                  copAI.GetCurrentState() == PoliceAIWaypoint.CopState.Attack ||
+                                  copAI.GetCurrentState() == PoliceAIWaypoint.CopState.Arrest))
+            {
+                // Set the IsCaught parameter in the Animator
+                animator.SetBool("IsCaught", true);
+
+                // Add whatever logic you use to deactivate green spray or handle the caught state
+                DeactivateGreenSpray();
+           
+                // Assuming you have a currentState variable to set
+                currentState = PlayerState.Caught;
+            
+            }
+        }
+    }
+
+    public PlayerState GetCurrentState()
+    {
+        return currentState;
     }
 
     public void EmptyItemInBag()

@@ -10,6 +10,7 @@ public class PoliceAIWaypoint : MonoBehaviour
     private UnityEngine.AI.NavMeshAgent agent;
     public GameObject[] waypoints;
     private int currentWaypoint = 0;
+
     // private bool isChasing = false;
     private Transform playerTransform;
     private float timeSinceLastSeen = 0f;
@@ -48,6 +49,12 @@ public class PoliceAIWaypoint : MonoBehaviour
 
     public CopState currentState = CopState.Patrol;
 
+    // Public method to access the current state
+    public CopState GetCurrentState()
+    {
+        return currentState;
+    }
+
     void UpdateState()
     {
         switch (currentState)
@@ -76,7 +83,11 @@ public class PoliceAIWaypoint : MonoBehaviour
                 break;
             case CopState.Attack:
                 float attackDistance = Vector3.Distance(transform.position, playerTransform.position);
-                if (attackDistance > attackRange) currentState = CopState.Chase; // Simplified condition
+                if (ajController.currentState == AJ_controller_Script.PlayerState.Caught)
+                {
+                    currentState = CopState.Arrest;
+                }
+                else if (attackDistance > attackRange) currentState = CopState.Chase; // Simplified condition
                 break;
             // Add other state transitions here
         }
@@ -112,6 +123,7 @@ public class PoliceAIWaypoint : MonoBehaviour
         {
             timeSinceLastSeen += Time.deltaTime;
         }
+
         UpdateState(); // Determine the current state based on game conditions
 
         switch (currentState)
@@ -131,6 +143,7 @@ public class PoliceAIWaypoint : MonoBehaviour
             // case CopState.Suspicious:
             //     SuspiciousBehavior();
             //     break;
+
         }
 
 

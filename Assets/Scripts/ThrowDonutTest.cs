@@ -10,11 +10,18 @@ public class ThrowDonutTest : MonoBehaviour
 
     private Transform Spawner;
 
-    // Start is called before the first frame update
     void Start()
     {
         Spawner = GetComponent<Transform>();
-        heldDonut.SetActive(true); //ADDED BY CEDRIC
+        if (heldDonut != null)
+        {
+            heldDonut.SetActive(true);
+        }
+        else
+        {
+            // Include the GameObject name in the error message
+            Debug.LogError($"HeldDonut not assigned in the Inspector on GameObject '{this.gameObject.name}'", this.gameObject);
+        }
     }
 
     // Update is called once per frame
