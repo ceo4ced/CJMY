@@ -20,7 +20,7 @@ public class itemCollector : MonoBehaviour
 
     void SetCountText()
     {
-        countText.text = "Spraycan: " + currentColor;
+        countText.text = "Spray Can: " + currentColor;
     }
     public void ReceiveItem(string itemTag)
     {

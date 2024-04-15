@@ -30,6 +30,7 @@ public class AJ_controller_Script : MonoBehaviour
     public Transform cameraTransform; // Reference to the main camera's transform
     public GameObject TutorialText;
     public GameObject ObjectiveText;
+    public TMPro.TextMeshProUGUI scoreText;
     public AudioClip spraySound;
 
     private CharacterController controller;
@@ -40,6 +41,7 @@ public class AJ_controller_Script : MonoBehaviour
     private bool hasRedCan;
     private bool hasBlueCan;
     private bool hasGreenCan;
+    private int score = 0; // Initialize the score
 
     void Start()
     {
@@ -307,27 +309,59 @@ public class AJ_controller_Script : MonoBehaviour
     void ActivateGraffiti1()
     {
         GameObject graffitiToColor = retrieveClosestValidGraffiti();
-        if (hasBlueCan)
+        if (graffitiToColor == null) return; // If no valid graffiti is close enough, exit the method.
+
+        // Check if the graffiti has already been painted.
+        GraffitiPaintedTracker graffitiTracker = graffitiToColor.GetComponent<GraffitiPaintedTracker>();
+        SpriteRenderer spriteRenderer = graffitiToColor.GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null) return; // Safety check for SpriteRenderer component.
+
+        if (graffitiTracker != null && graffitiTracker.hasBeenPainted)
         {
-            //do blue things
-            SpriteRenderer spriteRenderer = graffitiToColor.GetComponent<SpriteRenderer>();
-            spriteRenderer.color = Color.blue;
-            graffitiToColor.SetActive(true);
+            // Already painted graffiti logic: repaint but no score change.
+            if (hasGreenCan)
+            {
+                spriteRenderer.color = Color.green; // Reapply green color
+            }
+            else if (hasBlueCan)
+            {
+                spriteRenderer.color = Color.blue; // Reapply blue color
+            }
+            else if (hasRedCan)
+            {
+                spriteRenderer.color = Color.red; // Reapply red color
+            }
+
+            graffitiToColor.SetActive(true); // Ensure the graffiti is visible.
+                                             // No score update and return to avoid changing any other game state.
+            return;
         }
-        if (hasRedCan)
-        {
-            // do red things
-            SpriteRenderer spriteRenderer = graffitiToColor.GetComponent<SpriteRenderer>();
-            spriteRenderer.color = Color.red;
-            graffitiToColor.SetActive(true);
-        }
+
+        // Paint the graffiti and mark it as painted.
         if (hasGreenCan)
         {
-            // do green things
-            SpriteRenderer spriteRenderer = graffitiToColor.GetComponent<SpriteRenderer>();
             spriteRenderer.color = Color.green;
-            graffitiToColor.SetActive(true);
+            score += 10; // Increment score for green
         }
+        else if (hasBlueCan)
+        {
+            spriteRenderer.color = Color.blue;
+            score += 20; // Increment score for blue
+        }
+        else if (hasRedCan)
+        {
+            spriteRenderer.color = Color.red;
+            score += 50; // Increment score for red
+        }
+
+        graffitiToColor.SetActive(true);
+        if (graffitiTracker != null)
+        {
+            graffitiTracker.hasBeenPainted = true; // Mark the graffiti as painted.
+        }
+
+        // Update the score display and other UI elements
+        scoreText.text = "Score: " + score;
         TutorialText.GetComponent<TMPro.TextMeshPro>().text = "Great job!\nNow go and complete your first objective.";
         ObjectiveText.GetComponent<TMPro.TextMeshProUGUI>().text = "Objective:\nHead to the main square";
     }
