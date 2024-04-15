@@ -10,6 +10,24 @@ public class ThrowDonutTest : MonoBehaviour
 
     private Transform Spawner;
 
+    //Cooldowns
+    public static float throwDonutCooldown = 2.0f;
+    private float respawnDonutCooldown = 1.0f;
+    private float throwDonutCooldownFinished;
+    private float respawnDonutCooldownFinished;
+
+    //cooldown helper functions
+    bool shouldRespawnDonut(){
+        return Time.time >= respawnDonutCooldownFinished; 
+    }
+    bool canThrowDonut(){
+        return Time.time >= throwDonutCooldownFinished;
+    }
+    void startThrowDonutCooldown(){
+        throwDonutCooldownFinished = Time.time + throwDonutCooldown;
+        respawnDonutCooldownFinished = Time.time + respawnDonutCooldown;
+    }
+
     void Start()
     {
         Spawner = GetComponent<Transform>();
@@ -27,6 +45,10 @@ public class ThrowDonutTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(shouldRespawnDonut()){
+            heldDonut.SetActive(true);
+            Debug.Log("Set donut active");
+        }
         
     }
 
@@ -34,10 +56,10 @@ public class ThrowDonutTest : MonoBehaviour
     {
         Debug.Log("Throw Donut Function called");
         // if (!heldDonut.activeSelf == false)
-        if(true)
+        if(canThrowDonut())
         {
             Debug.Log("Grab Donut");
-            // heldDonut.SetActive(false);
+            heldDonut.SetActive(false);
             Transform thrownDonut = Instantiate(donutProjectile, heldDonut.GetComponent<Transform>().position, Quaternion.identity);
             
             Debug.Log("Aim Donut");
@@ -45,6 +67,7 @@ public class ThrowDonutTest : MonoBehaviour
             thrownDonutProjectileScript.Setup(Spawner.forward);
             // heldDonut.SetActive(true); //ADDED BY CEDRIC
             Debug.Log("Threw Donut");
+            startThrowDonutCooldown();
         }
         // else 
         // {

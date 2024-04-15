@@ -62795,13 +62795,6 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 3.4666667
-    functionName: ResetSprayParameter
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 5.0333333
     functionName: DeactivateGreenSpray
     data: 
@@ -62818,6 +62811,13 @@ AnimationClip:
     messageOptions: 0
   - time: 5.5666666
     functionName: DeactivateSprayCan
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 5.9666667
+    functionName: ResetSprayParameter
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

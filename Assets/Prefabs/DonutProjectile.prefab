@@ -62,7 +62,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.12
+  m_Radius: 0.7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4052568587585780378
 MonoBehaviour:
@@ -76,6 +76,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bd7b005491148743b079bebc323eded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileSpeed: 50
+  direction: {x: 0, y: 0, z: 1}
 --- !u!1 &9069365559967936991
 GameObject:
   m_ObjectHideFlags: 0

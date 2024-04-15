@@ -6,12 +6,14 @@ public class ReceiveDamageScript : MonoBehaviour
 {
     [SerializeField] private float launchPower = 15.0f;
     private CharacterController character;
+    private AJ_controller_Script ajController;
     Vector3 impact = Vector3.zero;
 
     // Start is called before the first frame update
     void Start()
     {
         character = GetComponent<CharacterController>();
+        ajController = GetComponent<AJ_controller_Script>();
     }
     void AddImpact(Vector3 dir, float force)
     {
@@ -37,12 +39,12 @@ public class ReceiveDamageScript : MonoBehaviour
     {
         Debug.Log("took damage");
         Rigidbody rb = GetComponent<Rigidbody>();
-        CharacterController cc = GetComponent<CharacterController>();
-        if (rb != null && cc != null)
+        if (rb != null && character != null)
         {
             //Debug.Log("Fly");
             //Debug.Log(rb);
             AddImpact(dir, launchPower);
+            ajController.TookDamage();
         }
     }
 }

@@ -180,6 +180,9 @@ public class AJ_controller_Script : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && currentState == PlayerState.Spraying)
         {
             SwitchToNormalState();
+            DeactivateSprayCan(); //Martin Edit
+            DeactivateGreenSpray();//Martin Edit
+            ResetSprayParameter();//Martin Edit
         }
     }
 
@@ -336,13 +339,20 @@ public class AJ_controller_Script : MonoBehaviour
     {
         Graffiti1.SetActive(false);
     }
-
     void DeactivateAllGraffiti()
     {
         print(AllGraffiti.childCount);
         foreach (Transform graffiti in AllGraffiti) {
             graffiti.gameObject.SetActive(false);
         }
+    }
+
+    public void TookDamage(){
+        //switch back to normal state when taking damage so we can run.
+        SwitchToNormalState();
+        DeactivateSprayCan();
+        DeactivateGreenSpray();
+        ResetSprayParameter();
     }
 
     /**
