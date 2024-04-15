@@ -641,6 +641,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4154021153174908}
   - component: {fileID: 95102391320674130}
+  - component: {fileID: 2625351745297887903}
   m_Layer: 0
   m_Name: cop
   m_TagString: Untagged
@@ -686,6 +687,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2625351745297887903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254403252897968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d8a195d0c9de64d9ddfb18463fa421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldDonut: {fileID: 1902993143538460}
+  donutProjectile: {fileID: 5438900905978909073, guid: 8bad74af90a07c54893fd7f40fe7aed5,
+    type: 3}
 --- !u!1 &1280262292577798
 GameObject:
   m_ObjectHideFlags: 0

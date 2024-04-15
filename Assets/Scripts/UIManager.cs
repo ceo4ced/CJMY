@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 {
     public GameObject mainMenu;
     public GameObject manualMenu;
+    public GameObject prestartMenu;
 
     void Start()
     {
@@ -18,7 +19,7 @@ public class UIManager : MonoBehaviour
     public void ShowMainMenu()
     {
         mainMenu.SetActive(true);
-        // characterMenu.SetActive(false);
+        manualMenu.SetActive(false);
     }
 
     // Call this to show Manual Menu and hide Main Menu
@@ -27,6 +28,15 @@ public class UIManager : MonoBehaviour
         mainMenu.SetActive(false);
         manualMenu.SetActive(true);
     }
+
+    // Call this to show Manual Menu and hide Main Menu
+    public void ShowPrestartMenu()
+    {
+        mainMenu.SetActive(false);
+        manualMenu.SetActive(false);
+        prestartMenu.SetActive(true);
+    }
+
 
     // Call this to quit the game (works in built games, not in the editor)
     public void ExitGame()

@@ -28,13 +28,16 @@ public class ProjectileScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider c)
     {
-        
+        if(c.CompareTag("Cop")){
+            //Ignore collision with cop (self)
+        }else{ 
         if (c.CompareTag("Player"))
         {
             Debug.Log("Collided");
             ReceiveDamageScript damageReceiver = c.GetComponent<ReceiveDamageScript>();
             damageReceiver.ReceiveDamage(direction);
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
+        }
     }
 }

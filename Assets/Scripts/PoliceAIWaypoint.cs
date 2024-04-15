@@ -114,7 +114,20 @@ public class PoliceAIWaypoint : MonoBehaviour
 
         agent.speed = walkingSpeed;
 
-        throwDonutTestInstance = gameObject.AddComponent<ThrowDonutTest>();
+        // throwDonutTestInstance = gameObject.AddComponent<ThrowDonutTest>();
+        throwDonutTestInstance = GetComponent<ThrowDonutTest>();
+
+        // Spawner = GetComponent<Transform>();
+        // if (heldDonut != null)
+        // {
+        //     heldDonut.SetActive(true);
+        // }
+        // else
+        // {
+        //     // Include the GameObject name in the error message
+        //     Debug.LogError($"HeldDonut not assigned in the Inspector on GameObject '{this.gameObject.name}'", this.gameObject);
+        // }
+
     }
 
     void Update()
@@ -131,11 +144,10 @@ public class PoliceAIWaypoint : MonoBehaviour
             case CopState.Patrol:
                 SetNextWaypoint();
                 break;
-            case CopState.Chase:
-                StartChasing();
-                break;
             case CopState.Attack:
+            case CopState.Chase:
                 HandleAttack();
+                StartChasing();
                 break;
             case CopState.Arrest:
                 ArrestPlayer();
