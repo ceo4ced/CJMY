@@ -261,6 +261,13 @@ public class PoliceAIWaypoint : MonoBehaviour
         Vector3 eyePosition = transform.position + Vector3.up * eyeHeight; // Central position of the eyes
         bool crimeDetected = false;
 
+        // Adjust rotation for the raycast when in suspicious state
+        Quaternion initialRotation = transform.rotation;
+        if (currentState == CopState.Suspicious)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0) * transform.rotation;
+        }
+
         for (int i = 0; i < numberOfRays; i++)
         {
             // Calculate the rotation angle for each ray
@@ -271,15 +278,13 @@ public class PoliceAIWaypoint : MonoBehaviour
             if (Physics.Raycast(eyePosition, direction, out hit, rayDistance))
             {
                 Debug.DrawRay(eyePosition, direction * rayDistance, Color.green); // Visualize the ray in the Scene view
-                
                 if (hit.collider.CompareTag("Player"))
                 {
-                    
-                    // PlayerState playerState = hit.collider.GetComponent<PlayerState>();
-                    if (ajController.currentState == AJ_controller_Script.PlayerState.Spraying)
+                    AJ_controller_Script playerController = hit.collider.GetComponent<AJ_controller_Script>();
+                    if (playerController != null && playerController.currentState == AJ_controller_Script.PlayerState.Spraying)
                     {
                         crimeDetected = true;
-                        Debug.DrawRay(eyePosition, direction * rayDistance, Color.red); // Visualize the ray in the Scene view
+                        Debug.DrawRay(eyePosition, direction * rayDistance, Color.red); // Visualize crime detection ray in Scene view
                         currentState = CopState.Chase;
                         break;
                     }
@@ -290,6 +295,9 @@ public class PoliceAIWaypoint : MonoBehaviour
                 Debug.DrawRay(eyePosition, direction * rayDistance, Color.white); // Visualize the ray when no collision occurs
             }
         }
+
+        // Reset rotation after performing raycast
+        transform.rotation = initialRotation;
 
         return crimeDetected;
     }
