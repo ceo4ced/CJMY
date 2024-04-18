@@ -47,7 +47,7 @@ public class ThrowDonutTest : MonoBehaviour
     {
         if(shouldRespawnDonut()){
             heldDonut.SetActive(true);
-            Debug.Log("Set donut active");
+            //Debug.Log("Set donut active");
         }
         
     }

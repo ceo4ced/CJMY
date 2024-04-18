@@ -38,6 +38,10 @@ public class PoliceAIWaypoint : MonoBehaviour
     private AJ_controller_Script ajController;
     private ThrowDonutTest throwDonutTestInstance;
 
+    private float nextSuspiciousTime = 10f; // Time until next suspicious state
+    private float suspiciousDuration = 2.2f; // Duration of suspicious state
+    private float suspiciousTimer = 0f; // Tracks the current time in suspicious state
+
     public enum CopState
     {
         Patrol,
@@ -60,10 +64,28 @@ public class PoliceAIWaypoint : MonoBehaviour
         switch (currentState)
         {
             case CopState.Patrol:
-                if (CheckForCrime())
-                { 
+                if (Time.time >= nextSuspiciousTime)
+                {
+                    currentState = CopState.Suspicious;
+                    suspiciousTimer = Time.time + suspiciousDuration; // Set when the suspicious state should end
+                    nextSuspiciousTime = Time.time + 10f; // Reset next suspicious time
+                }
+                else if (CheckForCrime())
+                {
                     currentState = CopState.Chase;
-                    timeSinceLastSeen = 0f; 
+                    timeSinceLastSeen = 0f;
+                }
+                break;
+            case CopState.Suspicious:
+                if (Time.time >= suspiciousTimer)
+                {
+                    agent.isStopped = false;  // Re-enable navigation when leaving Suspicious state
+                    currentState = CopState.Patrol;
+                }
+                else if (CheckForCrime())
+                {
+                    currentState = CopState.Chase;
+                    timeSinceLastSeen = 0f;
                 }
                 break;
             case CopState.Chase:
@@ -144,8 +166,16 @@ public class PoliceAIWaypoint : MonoBehaviour
             case CopState.Patrol:
                 SetNextWaypoint();
                 break;
+            case CopState.Suspicious:
+                if (!agent.isStopped)
+                {
+                    agent.isStopped = true;  // Stop the navigation to freeze the position
+                    agent.velocity = Vector3.zero; // Optionally clear any residual movement
+                }
+                break;
             case CopState.Attack:
             case CopState.Chase:
+                agent.isStopped = false;
                 HandleAttack();
                 StartChasing();
                 break;
@@ -282,7 +312,7 @@ public class PoliceAIWaypoint : MonoBehaviour
 
     void StartChasing()
     {
-        Debug.Log("Chasing Player");
+        //Debug.Log("Chasing Player");
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         // isChasing = true;
         copAnimator.SetBool(isChasingParam, true);
@@ -297,12 +327,12 @@ public class PoliceAIWaypoint : MonoBehaviour
         copAnimator.SetBool(isChasingParam, false);
         agent.speed = walkingSpeed;
         currentState = CopState.Suspicious;
-        Debug.Log("Stopped Chasing, Too Many Donuts");
+        //Debug.Log("Stopped Chasing, Too Many Donuts");
     }
 
     void SuspiciousBehavior()
     {
-        Debug.Log("Looking for Suspicious Behavior");
+        //Debug.Log("Looking for Suspicious Behavior");
         if (currentState == CopState.Suspicious)
             {
                 if (!isTurning && Time.time >= nextTurnTime)
@@ -341,11 +371,11 @@ public class PoliceAIWaypoint : MonoBehaviour
 
     void HandleAttack()
     {
-        Debug.Log("Attacking Player");
+        //Debug.Log("Attacking Player");
         // agent.isStopped = true; // Allow the NavMeshAgent to resume moving
         // copAnimator.SetBool(isAttackingParam, true);
         throwDonutTestInstance.ThrowDonut();
-        Debug.Log("Donut Thrown");
+        //Debug.Log("Donut Thrown");
         // if (Vector3.Distance(transform.position, playerTransform.position) <= attackRange && isChasing)
         // {
         //     // Within attack range and chasing, start attack
@@ -371,7 +401,7 @@ public class PoliceAIWaypoint : MonoBehaviour
 
     void ArrestPlayer()
     {
-       Debug.Log("Player Arrested");
+       //Debug.Log("Player Arrested");
     }
 }
 

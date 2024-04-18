@@ -37,7 +37,7 @@ public class ReceiveDamageScript : MonoBehaviour
 
     public void ReceiveDamage(Vector3 dir)
     {
-        Debug.Log("took damage");
+        //Debug.Log("took damage");
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null && character != null)
         {

@@ -375,7 +375,6 @@ public class AJ_controller_Script : MonoBehaviour
     }
     void DeactivateAllGraffiti()
     {
-        print(AllGraffiti.childCount);
         foreach (Transform graffiti in AllGraffiti) {
             graffiti.gameObject.SetActive(false);
         }
@@ -383,6 +382,20 @@ public class AJ_controller_Script : MonoBehaviour
 
     public void TookDamage(){
         //switch back to normal state when taking damage so we can run.
+
+        // Choose a random deduction value: 10, 20, or 30.
+        int[] deductionOptions = { 10, 20, 30 };
+        int deduction = deductionOptions[Random.Range(0, deductionOptions.Length)];
+
+        // Deduct the randomly chosen amount from the score.
+        score -= deduction;
+
+        // Ensure score doesn't drop below zero.
+        if (score < 0) score = 0;
+
+        // Update UI if necessary
+        scoreText.text = "Score: " + score;
+
         SwitchToNormalState();
         DeactivateSprayCan();
         DeactivateGreenSpray();

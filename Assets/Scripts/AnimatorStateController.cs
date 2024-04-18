@@ -75,13 +75,19 @@ public class AnimatorStateController : MonoBehaviour
             case PoliceAIWaypoint.CopState.Patrol:
                 animator.SetBool("IsChasing", false);
                 animator.SetBool("IsAttacking", false);
+                animator.SetBool("IsTurning", false);
+                break;
+            case PoliceAIWaypoint.CopState.Suspicious:
+                animator.SetBool("IsTurning", true);
                 break;
             case PoliceAIWaypoint.CopState.Chase:
                 animator.SetBool("IsChasing", true);
+                animator.SetBool("IsTurning", false);
                 break;
             case PoliceAIWaypoint.CopState.Attack:
                 animator.SetBool("IsChasing", true);
                 animator.SetBool("IsAttacking", true);
+                animator.SetBool("IsTurning", false);
                 break;
             case PoliceAIWaypoint.CopState.Arrest:
                 if (previousState != PoliceAIWaypoint.CopState.Arrest) // Check if we just entered Arrest state
