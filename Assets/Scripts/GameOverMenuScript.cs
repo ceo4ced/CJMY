@@ -9,5 +9,6 @@ public class GameOverMenuScript : MonoBehaviour
     }
     public void Quit(){
         //exit game
+        Application.Quit();
     }
 }
