@@ -182,7 +182,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Follow the objectives and don''t get caught by the pigs!
+  m_text: 'Tag walls to get points and don''t get caught by the pigs!
 
 
 

@@ -367,8 +367,8 @@ public class AJ_controller_Script : MonoBehaviour
 
         // Update the score display and other UI elements
         scoreText.text = "Score: " + score;
-        TutorialText.GetComponent<TMPro.TextMeshPro>().text = "Great job!\nNow go and complete your first objective.";
-        ObjectiveText.GetComponent<TMPro.TextMeshProUGUI>().text = "Objective:\nHead to the main square";
+        TutorialText.GetComponent<TMPro.TextMeshPro>().text = "Great job!\nNow go and complete your objective.";
+        ObjectiveText.GetComponent<TMPro.TextMeshProUGUI>().text = "Objective:\nHead to the main square \nand start tagging!";
     }
 
     void DeactivateGraffiti1()

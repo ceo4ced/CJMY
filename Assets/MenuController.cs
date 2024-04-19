@@ -5,6 +5,7 @@ using UnityEngine;
 public class MenuController : MonoBehaviour
 {
     public GameObject menuPanel; // Assign this in the inspector
+    public GameObject Background;
 
     void Start()
     {
@@ -19,6 +20,7 @@ public class MenuController : MonoBehaviour
     {
         // Hide the menu panel when Skip is clicked
         menuPanel.SetActive(false);
+        Background.SetActive(false);
 
         // Resume the game
         Time.timeScale = 1;
