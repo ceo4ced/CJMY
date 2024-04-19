@@ -9,7 +9,7 @@ public class GameOverMenuScript : MonoBehaviour
     }
     public void Quit()
     {
-        Debug.Log("Quit function called");
+        //Debug.Log("Quit function called");
         Application.Quit();
 
 #if UNITY_EDITOR

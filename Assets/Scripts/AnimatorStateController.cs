@@ -23,7 +23,7 @@ public class AnimatorStateController : MonoBehaviour
 
         if (policeAI == null)
         {
-            Debug.LogError("PoliceAIWaypoint component is not assigned!");
+            //Debug.LogError("PoliceAIWaypoint component is not assigned!");
         }
 
         previousState = policeAI.GetCurrentState(); // Initialize previousState at start

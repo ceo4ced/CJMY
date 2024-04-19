@@ -23,7 +23,7 @@ public class itemPickup : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("AJ_controller_Script not found on player object.");
+                    //Debug.LogWarning("AJ_controller_Script not found on player object.");
                 }
                 //this.gameObject.SetActive(false);
                 foreach (Transform child in transform)
@@ -38,7 +38,7 @@ public class itemPickup : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Player already has an item.");
+                //Debug.LogWarning("Player already has an item.");
                 // Optionally, you could play a sound or provide feedback to the player indicating they can't pick up another item.
             }
         }

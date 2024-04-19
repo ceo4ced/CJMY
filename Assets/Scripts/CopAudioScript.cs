@@ -18,7 +18,7 @@ public class CopAudioScript : MonoBehaviour
         AudioSource[] audioSources = GetComponents<AudioSource>();
         if (audioSources.Length < 2)
         {
-            Debug.LogError("Expected at least two AudioSource components on the GameObject");
+            //Debug.LogError("Expected at least two AudioSource components on the GameObject");
             return;
         }
         footstepAudioSource = audioSources[0];

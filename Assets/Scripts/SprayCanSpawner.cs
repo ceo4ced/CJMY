@@ -31,7 +31,7 @@ public class SprayCanSpawner : MonoBehaviour
         SpawnCans(blueCanPrefab, numBlueCans, minX, maxX, minZ, maxZ);
         SpawnCans(redCanPrefab, numRedCans, minX, maxX, minZ, maxZ);
 
-        Debug.Log("Total cans spawned: " + totalCansSpawned);
+        //Debug.Log("Total cans spawned: " + totalCansSpawned);
     }
 
     void SpawnCans(GameObject canPrefab, int quantity, float minX, float maxX, float minZ, float maxZ)
@@ -46,7 +46,7 @@ public class SprayCanSpawner : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Could not find a suitable position for more cans.");
+                //Debug.LogWarning("Could not find a suitable position for more cans.");
                 break; // Exit the loop if no suitable position is found
             }
         }
