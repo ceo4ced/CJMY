@@ -1,7 +1,10 @@
 ﻿CJMY Graffiti README
 
 
-Develoeprs: Cedric Williams, Jonathan Gary Doerr, Martin L, and Yoandry Antonio Sosa
+Developers: Cedric Williams, Jonathan Gary Doerr, Martin L, and Yoandry Antonio Sosa
+
+Starting Scene file:
+Assets/Scenes/Menus/Menus.unity
 
 
 CJMY Graffit Game Purpose
@@ -11,31 +14,38 @@ As a graffiti artist, your goal is to tag the city and not get detected.
 Player Control
 To move the character, use the arrow keys or W,A,S,Z and hold Shift to run with forward movement.
 To spray paint or tag a wall, push Q.
-To jump, press Spacebar (not implemented right now)
 
 
 What to expect while playing
 After clicking “Start” from the main menu, you will control a character in third person view.  Goal is to find a spray can and tag designated areas without getting caught by the Cops (Raptors for now).  There’s a 10 minute timer to tag as many walls as possible without getting caught.
 
 
-Issues
-* Right now, we’re missing the final animated NPC Cop and have a substitute as a Raptor.  Also, the state change for the NPC Cop (Raptor) is not functioning correctly.  The raptors are only suppose to attack the Player when the player is spraying.  While walking, the player should be unscathed.
-* We need to expand beyond our sample scenario and add more spray cans around the level and NPC enemies on patrol.
-* We need to add more sprayable areas in the level.
-* We need to add instructions to playing the game in the menu
-* The Player animation while turning is wonky and we need to smooth out the transitions.
-* Add sound effects while acquiring a spray can
-* Add sound effects for when NPC capture you
-* Create an animation for when we are caught
-* Add Jump functionality for the Player
+Requirements:
 
+Precursors to Fun Gameplay
+	Goals (tagging the walls) / subgoals (collecting coins) are communicated to the player
 
+3D Character with Real-Time Control
+	Character AJ is able to walk and run
+	Camera is smooth
+	Animations are clean
+
+3D World with Physics and Spatial Simulation
+	SimpleTown has been changed to be taggable via spray cans.
+	Fences and ramps have been added to facilitate gameplay
+	Spray paint and walking sounds
+
+Real-Time NPC Steering Behaviors / AI
+	Cop enemies have multiple states (patrolling / chasing)
+	Raycast prevents the Cop from seeing through walls
+	Cop chases the player withing range
+
+Polish
+	Start Menu GUI
+	In game pause menu via esc
 
 
 Contributions from Team Members
-
-
-
 
 Cedric
 Added two raycasting rays to represent eyes that look 50 meters straight.  The code is present in the EnemyVision.cs and PlayerState.cs.  The script performs by casting two rays while the cop is patrolling the area.  Once the cop notices Player1 spray painting, he will change state into “chase” mode until he captures Player1.
@@ -79,11 +89,16 @@ Added the in-game UI with an objective field (to be updated in the future) as we
 - Debugged Alpha version after GitHub merging
 - Fixed spray can collection
 - Fixed NPC animation
+- Coin asset
+- Made graffiti change color
 Files:  
 * Canvas for in-game GUI
 * Debugged NavMesh and Waypoints
 * WaypointChase.cs
-* 
+* CoinCollectionScript.cs
+* PauseMenuToggle.cs
+* UIManager.cs
+* ItemPickup.cs
 
 
 
