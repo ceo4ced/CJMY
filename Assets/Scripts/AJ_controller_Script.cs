@@ -248,6 +248,7 @@ public class AJ_controller_Script : MonoBehaviour
         {
             audioSource.clip = spraySound;
             audioSource.loop = true; // Make sure the sound loops
+            audioSource.volume = 1.0f; // Set the volume to maximum
             audioSource.Play();
         }
 

@@ -25,13 +25,25 @@ public class AJAudioScript : MonoBehaviour
         {
             int layer = hit.collider.gameObject.layer;
             if (layer == LayerMask.NameToLayer("Ground"))
+            {
                 audioSource.clip = groundClip;
+                audioSource.volume = 0.080f; // Set volume for ground
+            }
             else if (layer == LayerMask.NameToLayer("Grass"))
+            {
                 audioSource.clip = grassClip;
+                audioSource.volume = 1f; // You can adjust this volume as needed
+            }
             else if (layer == LayerMask.NameToLayer("Sand"))
+            {
                 audioSource.clip = sandClip;
+                audioSource.volume = 0.2f; // You can adjust this volume as needed
+            }
             else if (layer == LayerMask.NameToLayer("Water"))
+            {
                 audioSource.clip = waterClip;
+                audioSource.volume = 0.5f; // You can adjust this volume as needed
+            }
 
             audioSource.Play();
         }
