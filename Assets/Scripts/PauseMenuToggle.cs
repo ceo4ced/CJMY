@@ -36,7 +36,7 @@ public class PauseMenuToggle : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
-        UnityEditor.EditorApplication.isPlaying = false; // Uncomment if you want to use it in the editor
+        //UnityEditor.EditorApplication.isPlaying = false; // Uncomment if you want to use it in the editor
     }
     public void LoadGameScene()
     {
