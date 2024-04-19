@@ -32,6 +32,8 @@ public class AJ_controller_Script : MonoBehaviour
     public GameObject ObjectiveText;
     public TMPro.TextMeshProUGUI scoreText;
     public AudioClip spraySound;
+    public GameObject gameOverCanvas;
+    public TMPro.TextMeshProUGUI finalScoreText;
 
     private CharacterController controller;
     private Animator animator;
@@ -464,7 +466,16 @@ public class AJ_controller_Script : MonoBehaviour
            
                 // Assuming you have a currentState variable to set
                 currentState = PlayerState.Caught;
-            
+
+                //Open game over menu
+                CanvasGroup gameOverCanvasGroup = gameOverCanvas.GetComponent<CanvasGroup>();
+                Debug.Log(gameOverCanvasGroup);
+                if(!gameOverCanvasGroup.interactable){
+                gameOverCanvasGroup.interactable = true;
+                gameOverCanvasGroup.blocksRaycasts = true;
+                gameOverCanvasGroup.alpha = 1f;
+                finalScoreText.text = ""+score;
+                }
             }
         }
     }
