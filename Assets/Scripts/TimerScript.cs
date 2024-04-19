@@ -9,6 +9,8 @@ public class TimerScript : MonoBehaviour
     public int minutes;
     public int seconds;
     TMP_Text timerText;
+    public GameObject gameOverCanvas;
+    public GameObject mainCharacterReference;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +32,13 @@ public class TimerScript : MonoBehaviour
                     //timer is done
                     seconds = 0;
                     minutes = 0;
+
+                    //Open game over menu
+                    AJ_controller_Script ajController = mainCharacterReference.GetComponent<AJ_controller_Script>();
+                    GameOverMenuScript gameOverMenuScript = gameOverCanvas.GetComponent<GameOverMenuScript>();
+                    gameOverMenuScript.InitialiazeGameOverMenu("You Survived!", ajController.GetScore());
+                    ajController.GameOver(true);
+
                     return;
                 }
                 seconds = 59;

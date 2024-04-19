@@ -9,10 +9,13 @@ public class PauseMenuToggle : MonoBehaviour
     public CanvasGroup canvasGroup;
     public GameObject pauseMenu;
     private bool paused;
+    public GameObject gameOverCanvas;
+    private GameOverMenuScript gameOverMenuScript;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameOverMenuScript = gameOverCanvas.GetComponent<GameOverMenuScript>();
     }
     void Awake()
     {
@@ -47,7 +50,7 @@ public class PauseMenuToggle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape) && !gameOverMenuScript.GetIsGameOver())
         {
             if (paused)
             {
