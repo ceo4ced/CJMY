@@ -43,7 +43,7 @@ public class AJ_controller_Script : MonoBehaviour
     private bool hasRedCan;
     private bool hasBlueCan;
     private bool hasGreenCan;
-    private int score = 0; // Initialize the score
+    public int score = 0; // Initialize the score
 
     void Start()
     {
@@ -450,31 +450,19 @@ public class AJ_controller_Script : MonoBehaviour
         // Check if the other object has the tag "cop"
         if (other.CompareTag("Cop"))
         {
-            // Get the PoliceAIWaypoint script from the cop
             PoliceAIWaypoint copAI = other.GetComponent<PoliceAIWaypoint>();
 
-            // Check if the cop is in Chase, Attack, or Arrest state
             if (copAI != null && (copAI.GetCurrentState() == PoliceAIWaypoint.CopState.Chase ||
                                   copAI.GetCurrentState() == PoliceAIWaypoint.CopState.Attack ||
                                   copAI.GetCurrentState() == PoliceAIWaypoint.CopState.Arrest))
             {
-                // Set the IsCaught parameter in the Animator
                 animator.SetBool("IsCaught", true);
-
-                // Add whatever logic you use to deactivate green spray or handle the caught state
                 DeactivateGreenSpray();
-           
-                // Assuming you have a currentState variable to set
                 currentState = PlayerState.Caught;
-
-                //Open game over menu
-                CanvasGroup gameOverCanvasGroup = gameOverCanvas.GetComponent<CanvasGroup>();
-                Debug.Log(gameOverCanvasGroup);
-                if(!gameOverCanvasGroup.interactable){
-                gameOverCanvasGroup.interactable = true;
-                gameOverCanvasGroup.blocksRaycasts = true;
-                gameOverCanvasGroup.alpha = 1f;
-                finalScoreText.text = ""+score;
+                // Call GameManager to handle game over
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.TriggerGameOver(score, "You got caught!");
                 }
             }
         }
