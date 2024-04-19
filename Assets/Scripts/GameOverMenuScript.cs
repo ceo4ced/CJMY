@@ -12,9 +12,14 @@ public class GameOverMenuScript : MonoBehaviour
     public void Retry(){
         SceneManager.LoadScene("TESTCREATENEWSCENE");
     }
-    public void Quit(){
-        //exit game
+    public void Quit()
+    {
+        Debug.Log("Quit function called");
         Application.Quit();
+
+#if UNITY_EDITOR
+    UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 
     public void InitialiazeGameOverMenu(string labelText, int score){

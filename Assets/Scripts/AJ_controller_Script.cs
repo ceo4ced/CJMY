@@ -43,8 +43,12 @@ public class AJ_controller_Script : MonoBehaviour
     private bool hasRedCan;
     private bool hasBlueCan;
     private bool hasGreenCan;
+<<<<<<< HEAD
     private int score = 0; // Initialize the score
     private bool isGameOver = false;
+=======
+    public int score = 0; // Initialize the score
+>>>>>>> 01c825f89518c1583016999f984e644942951ada
 
     void Start()
     {
@@ -467,22 +471,16 @@ public class AJ_controller_Script : MonoBehaviour
         // Check if the other object has the tag "cop"
         if (other.CompareTag("Cop"))
         {
-            // Get the PoliceAIWaypoint script from the cop
             PoliceAIWaypoint copAI = other.GetComponent<PoliceAIWaypoint>();
 
-            // Check if the cop is in Chase, Attack, or Arrest state
             if (copAI != null && (copAI.GetCurrentState() == PoliceAIWaypoint.CopState.Chase ||
                                   copAI.GetCurrentState() == PoliceAIWaypoint.CopState.Attack ||
                                   copAI.GetCurrentState() == PoliceAIWaypoint.CopState.Arrest))
             {
-                // Set the IsCaught parameter in the Animator
                 animator.SetBool("IsCaught", true);
-
-                // Add whatever logic you use to deactivate green spray or handle the caught state
                 DeactivateGreenSpray();
-           
-                // Assuming you have a currentState variable to set
                 currentState = PlayerState.Caught;
+<<<<<<< HEAD
 
                 //Open game over menu
                 GameOverMenuScript gameOverMenuScript = gameOverCanvas.GetComponent<GameOverMenuScript>();
@@ -497,6 +495,13 @@ public class AJ_controller_Script : MonoBehaviour
                 // gameOverCanvasGroup.alpha = 1f;
                 // finalScoreText.text = ""+score;
                 // }
+=======
+                // Call GameManager to handle game over
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.TriggerGameOver(score, "You got caught!");
+                }
+>>>>>>> 01c825f89518c1583016999f984e644942951ada
             }
         }
     }

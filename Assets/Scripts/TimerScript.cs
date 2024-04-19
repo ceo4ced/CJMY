@@ -8,27 +8,40 @@ public class TimerScript : MonoBehaviour
 
     public int minutes;
     public int seconds;
+<<<<<<< HEAD
     TMP_Text timerText;
     public GameObject gameOverCanvas;
     public GameObject mainCharacterReference;
+=======
+    public GameObject timerCanvas; // Reference to the Canvas GameObject
+    public GameObject gameOverCanvas; // Reference to the Game Over Canvas GameObject
+    public TMP_Text finalScoreText; // Reference to the Text that will display the final score
+    public int score; // Variable to hold the score, ensure this is updated during the game
+    public AJ_controller_Script gameController;
+    public TMP_Text gameOverMessageText;
 
-    // Start is called before the first frame update
+    private TMP_Text timerText;
+    private float timePassed = 0.0f;
+>>>>>>> 01c825f89518c1583016999f984e644942951ada
+
     void Start()
     {
         timerText = GetComponent<TMP_Text>();
+        timerCanvas.SetActive(true); // Show the timer canvas initially
+        gameOverCanvas.SetActive(false); // Initially hide the game over canvas
     }
 
-    private float timePassed = 0.0f;
-    private void Update()
+    void Update()
     {
         timePassed += Time.deltaTime;
-        if (timePassed > 1f)
+        if (timePassed >= 1f)
         {
-            //do something
-            if (--seconds < 0)
+            seconds--;
+            if (seconds < 0)
             {
-                if (--minutes < 0)
+                if (minutes > 0)
                 {
+<<<<<<< HEAD
                     //timer is done
                     seconds = 0;
                     minutes = 0;
@@ -40,16 +53,36 @@ public class TimerScript : MonoBehaviour
                     ajController.GameOver(true);
 
                     return;
+=======
+                    minutes--;
+                    seconds = 59;
                 }
-                seconds = 59;
+                else
+                {
+                    // Time's up, show game over
+                    GameOver();
+                    return; // Stop the timer
+>>>>>>> 01c825f89518c1583016999f984e644942951ada
+                }
             }
-            updateTimerText();
+            UpdateTimerText();
             timePassed = 0f;
         }
     }
 
-    private void updateTimerText()
+    private void UpdateTimerText()
     {
-        timerText.text = minutes.ToString().PadLeft(2,'\u0030') + ":" + seconds.ToString().PadLeft(2, '\u0030');
+        timerText.text = $"{minutes:00}:{seconds:00}";
+    }
+
+    private void GameOver()
+    {
+        timerCanvas.SetActive(false);  // Hide the timer canvas
+
+        // Call GameManager to handle the game over process
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.TriggerGameOver(gameController.score, "You Survived!");
+        }
     }
 }
