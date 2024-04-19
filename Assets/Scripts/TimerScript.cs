@@ -8,15 +8,9 @@ public class TimerScript : MonoBehaviour
 
     public int minutes;
     public int seconds;
-    public GameObject timerCanvas; // Reference to the Canvas GameObject
-    public GameObject gameOverCanvas; // Reference to the Game Over Canvas GameObject
-    public TMP_Text finalScoreText; // Reference to the Text that will display the final score
-    public int score; // Variable to hold the score, ensure this is updated during the game
-    public AJ_controller_Script gameController;
-    public TMP_Text gameOverMessageText;
-
-    private TMP_Text timerText;
-    private float timePassed = 0.0f;
+    TMP_Text timerText;
+    public GameObject gameOverCanvas;
+    public GameObject mainCharacterReference;
 
     void Start()
     {
@@ -35,14 +29,17 @@ public class TimerScript : MonoBehaviour
             {
                 if (minutes > 0)
                 {
-                    minutes--;
-                    seconds = 59;
-                }
-                else
-                {
-                    // Time's up, show game over
-                    GameOver();
-                    return; // Stop the timer
+                    //timer is done
+                    seconds = 0;
+                    minutes = 0;
+
+                    //Open game over menu
+                    AJ_controller_Script ajController = mainCharacterReference.GetComponent<AJ_controller_Script>();
+                    GameOverMenuScript gameOverMenuScript = gameOverCanvas.GetComponent<GameOverMenuScript>();
+                    gameOverMenuScript.InitialiazeGameOverMenu("You Survived!", ajController.GetScore());
+                    ajController.GameOver(true);
+
+                    return;
                 }
             }
             UpdateTimerText();

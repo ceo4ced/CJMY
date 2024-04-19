@@ -43,7 +43,8 @@ public class AJ_controller_Script : MonoBehaviour
     private bool hasRedCan;
     private bool hasBlueCan;
     private bool hasGreenCan;
-    public int score = 0; // Initialize the score
+    private int score = 0; // Initialize the score
+    private bool isGameOver = false;
 
     void Start()
     {
@@ -404,6 +405,22 @@ public class AJ_controller_Script : MonoBehaviour
         ResetSprayParameter();
     }
 
+    public int GetScore(){
+        return score;
+    }
+    public bool GetIsGameOver(){
+        return isGameOver;
+    }
+    public void GameOver(bool pauseTime){
+        // Input.ResetInputAxes(); //makes character stand normally as soon as game is over but stops menu from working?
+        // allowInput = false; //probably stops menu from working as well
+        if(pauseTime){
+            Time.timeScale = 0.0f;
+        }
+        isGameOver = true;
+    }
+
+
     /**
      * Retrieve the graffiti GameObject that is closest within a certain range.
      */
@@ -459,11 +476,20 @@ public class AJ_controller_Script : MonoBehaviour
                 animator.SetBool("IsCaught", true);
                 DeactivateGreenSpray();
                 currentState = PlayerState.Caught;
-                // Call GameManager to handle game over
-                if (GameManager.Instance != null)
-                {
-                    GameManager.Instance.TriggerGameOver(score, "You got caught!");
-                }
+
+                //Open game over menu
+                GameOverMenuScript gameOverMenuScript = gameOverCanvas.GetComponent<GameOverMenuScript>();
+                gameOverMenuScript.InitialiazeGameOverMenu("Game Over!", score);
+                GameOver(false);
+
+                // CanvasGroup gameOverCanvasGroup = gameOverCanvas.GetComponent<CanvasGroup>();
+                // Debug.Log(gameOverCanvasGroup);
+                // if(!gameOverCanvasGroup.interactable){
+                // gameOverCanvasGroup.interactable = true;
+                // gameOverCanvasGroup.blocksRaycasts = true;
+                // gameOverCanvasGroup.alpha = 1f;
+                // finalScoreText.text = ""+score;
+                // }
             }
         }
     }
