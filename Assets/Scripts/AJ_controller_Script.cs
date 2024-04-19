@@ -55,14 +55,14 @@ public class AJ_controller_Script : MonoBehaviour
         DeactivateAllGraffiti();
         DeactivateGreenSpray();
         DeactivateSprayCan();
-        
+
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
 
         // Initialize lastPlayerPosition
         lastPlayerPosition = transform.position;
-        //Debug.Log("Initial player state: " + currentState.ToString());
+        Debug.Log("Initial player state: " + currentState.ToString());
     }
 
     void Update()
@@ -173,7 +173,7 @@ public class AJ_controller_Script : MonoBehaviour
             controller.Move(inputDirection * speed * Time.deltaTime);
             lastPlayerPosition = transform.position;
         }
-      
+
         if (Input.GetKeyDown(KeyCode.Q) && !animator.GetCurrentAnimatorStateInfo(0).IsName("AJ Spray") && (hasRedCan || hasGreenCan || hasBlueCan))
         {
             SwitchToSprayingState();
@@ -220,7 +220,7 @@ public class AJ_controller_Script : MonoBehaviour
         rb.constraints &= ~RigidbodyConstraints.FreezePositionZ;
         rb.constraints |= RigidbodyConstraints.FreezeRotation;
         allowInput = true; // Add this line to enable input control
-        //Debug.Log("Character switched back to normal state.");
+        Debug.Log("Character switched back to normal state.");
     }
 
     Vector3 RotateInputDirection(float horizontalInput, float verticalInput)
@@ -378,12 +378,14 @@ public class AJ_controller_Script : MonoBehaviour
     }
     void DeactivateAllGraffiti()
     {
-        foreach (Transform graffiti in AllGraffiti) {
+        foreach (Transform graffiti in AllGraffiti)
+        {
             graffiti.gameObject.SetActive(false);
         }
     }
 
-    public void TookDamage(){
+    public void TookDamage()
+    {
         //switch back to normal state when taking damage so we can run.
 
         // Choose a random deduction value: 10, 20, or 30.
@@ -405,16 +407,20 @@ public class AJ_controller_Script : MonoBehaviour
         ResetSprayParameter();
     }
 
-    public int GetScore(){
+    public int GetScore()
+    {
         return score;
     }
-    public bool GetIsGameOver(){
+    public bool GetIsGameOver()
+    {
         return isGameOver;
     }
-    public void GameOver(bool pauseTime){
+    public void GameOver(bool pauseTime)
+    {
         // Input.ResetInputAxes(); //makes character stand normally as soon as game is over but stops menu from working?
         // allowInput = false; //probably stops menu from working as well
-        if(pauseTime){
+        if (pauseTime)
+        {
             Time.timeScale = 0.0f;
         }
         isGameOver = true;
@@ -431,7 +437,7 @@ public class AJ_controller_Script : MonoBehaviour
         foreach (Transform graffiti in AllGraffiti)
         {
             float distance = Vector3.Distance(graffiti.position, this.transform.position);
-            if(distance < 10.0f && distance < shortestDistance)
+            if (distance < 10.0f && distance < shortestDistance)
             {
                 shortestDistance = distance;
                 closestValidGraffiti = graffiti.gameObject;
@@ -467,14 +473,21 @@ public class AJ_controller_Script : MonoBehaviour
         // Check if the other object has the tag "cop"
         if (other.CompareTag("Cop"))
         {
+            // Get the PoliceAIWaypoint script from the cop
             PoliceAIWaypoint copAI = other.GetComponent<PoliceAIWaypoint>();
 
+            // Check if the cop is in Chase, Attack, or Arrest state
             if (copAI != null && (copAI.GetCurrentState() == PoliceAIWaypoint.CopState.Chase ||
                                   copAI.GetCurrentState() == PoliceAIWaypoint.CopState.Attack ||
                                   copAI.GetCurrentState() == PoliceAIWaypoint.CopState.Arrest))
             {
+                // Set the IsCaught parameter in the Animator
                 animator.SetBool("IsCaught", true);
+
+                // Add whatever logic you use to deactivate green spray or handle the caught state
                 DeactivateGreenSpray();
+
+                // Assuming you have a currentState variable to set
                 currentState = PlayerState.Caught;
 
                 //Open game over menu

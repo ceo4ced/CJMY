@@ -12,22 +12,22 @@ public class TimerScript : MonoBehaviour
     public GameObject gameOverCanvas;
     public GameObject mainCharacterReference;
 
+    // Start is called before the first frame update
     void Start()
     {
         timerText = GetComponent<TMP_Text>();
-        timerCanvas.SetActive(true); // Show the timer canvas initially
-        gameOverCanvas.SetActive(false); // Initially hide the game over canvas
     }
 
-    void Update()
+    private float timePassed = 0.0f;
+    private void Update()
     {
         timePassed += Time.deltaTime;
-        if (timePassed >= 1f)
+        if (timePassed > 1f)
         {
-            seconds--;
-            if (seconds < 0)
+            //do something
+            if (--seconds < 0)
             {
-                if (minutes > 0)
+                if (--minutes < 0)
                 {
                     //timer is done
                     seconds = 0;
@@ -41,25 +41,15 @@ public class TimerScript : MonoBehaviour
 
                     return;
                 }
+                seconds = 59;
             }
-            UpdateTimerText();
+            updateTimerText();
             timePassed = 0f;
         }
     }
 
-    private void UpdateTimerText()
+    private void updateTimerText()
     {
-        timerText.text = $"{minutes:00}:{seconds:00}";
-    }
-
-    private void GameOver()
-    {
-        timerCanvas.SetActive(false);  // Hide the timer canvas
-
-        // Call GameManager to handle the game over process
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.TriggerGameOver(gameController.score, "You Survived!");
-        }
+        timerText.text = minutes.ToString().PadLeft(2, '\u0030') + ":" + seconds.ToString().PadLeft(2, '\u0030');
     }
 }
