@@ -62,7 +62,7 @@ public class TimerScript : MonoBehaviour
         // Call GameManager to handle the game over process
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.TriggerGameOver(gameController.score, "You Survived!");
+            GameManager.Instance.TriggerGameOver(gameController.score, "You Survived!", true);
         }
     }
 }

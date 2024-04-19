@@ -44,6 +44,7 @@ public class AJ_controller_Script : MonoBehaviour
     private bool hasBlueCan;
     private bool hasGreenCan;
     public int score = 0; // Initialize the score
+    public bool gameOver;
 
     void Start()
     {
@@ -462,7 +463,7 @@ public class AJ_controller_Script : MonoBehaviour
                 // Call GameManager to handle game over
                 if (GameManager.Instance != null)
                 {
-                    GameManager.Instance.TriggerGameOver(score, "You got caught!");
+                    GameManager.Instance.TriggerGameOver(score, "You got caught!", false);
                 }
             }
         }
