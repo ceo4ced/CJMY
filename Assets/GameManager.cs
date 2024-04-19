@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverCanvas;
     public TextMeshProUGUI finalScoreText;
     public TextMeshProUGUI gameOverMessageText; // Add this line if not already added
+    public bool IsGameOver { get; private set; } = false;
 
     void Awake()
     {
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     public void TriggerGameOver(int finalScore, string message)
     {
+        IsGameOver = true;  // Set the game over state to true
         gameOverCanvas.SetActive(true);
         CanvasGroup gameOverCanvasGroup = gameOverCanvas.GetComponent<CanvasGroup>();
         if (gameOverCanvasGroup != null)
@@ -32,7 +34,7 @@ public class GameManager : MonoBehaviour
             gameOverCanvasGroup.blocksRaycasts = true;
             gameOverCanvasGroup.alpha = 1f;
             finalScoreText.text = "Final Score: " + finalScore.ToString();
-            gameOverMessageText.text = message;  // Set the custom message
+            gameOverMessageText.text = message;
         }
     }
 }
