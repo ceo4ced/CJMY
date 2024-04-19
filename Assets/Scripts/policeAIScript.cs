@@ -28,13 +28,13 @@ public class policeAIScript : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         visionOrigin = transform.Find("VisionOrigin");
-        Debug.Log(visionOrigin.position);
+        //Debug.Log(visionOrigin.position);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        Debug.Log(player.position);
+        //Debug.Log(player.position);
         navAgent = GetComponent<NavMeshAgent>();
         playerLayerMask = LayerMask.GetMask("Character");
         groundLayerMask = LayerMask.GetMask("Ground");
-        Debug.Log("Initialized");
+        //Debug.Log("Initialized");
     }
 
     // Update is called once per frame
@@ -42,12 +42,12 @@ public class policeAIScript : MonoBehaviour
     {
         if (CheckForCrime())
         {
-            Debug.Log("Player is spraying!");
+            //Debug.Log("Player is spraying!");
             sawCrime = true;
         }
         else
         {
-            Debug.Log("Player is not spraying!");
+            //Debug.Log("Player is not spraying!");
             sawCrime = false;
         }
 
@@ -148,7 +148,7 @@ public class policeAIScript : MonoBehaviour
                 // Check if the player is in the spraying state
                 if (playerState != null && playerState.currentState == PlayerState.State.Spraying)
                 {
-                    Debug.Log("Cop sees the player spraying!");
+                    //Debug.Log("Cop sees the player spraying!");
                     // currentState = CopState.Chase;
                     return true;
                 }

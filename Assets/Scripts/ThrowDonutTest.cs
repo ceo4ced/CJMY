@@ -38,7 +38,7 @@ public class ThrowDonutTest : MonoBehaviour
         else
         {
             // Include the GameObject name in the error message
-            Debug.LogError($"HeldDonut not assigned in the Inspector on GameObject '{this.gameObject.name}'", this.gameObject);
+            //Debug.LogError($"HeldDonut not assigned in the Inspector on GameObject '{this.gameObject.name}'", this.gameObject);
         }
     }
 

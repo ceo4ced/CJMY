@@ -62,7 +62,7 @@ public class AJ_controller_Script : MonoBehaviour
 
         // Initialize lastPlayerPosition
         lastPlayerPosition = transform.position;
-        Debug.Log("Initial player state: " + currentState.ToString());
+        //Debug.Log("Initial player state: " + currentState.ToString());
     }
 
     void Update()
@@ -220,7 +220,7 @@ public class AJ_controller_Script : MonoBehaviour
         rb.constraints &= ~RigidbodyConstraints.FreezePositionZ;
         rb.constraints |= RigidbodyConstraints.FreezeRotation;
         allowInput = true; // Add this line to enable input control
-        Debug.Log("Character switched back to normal state.");
+        //Debug.Log("Character switched back to normal state.");
     }
 
     Vector3 RotateInputDirection(float horizontalInput, float verticalInput)
