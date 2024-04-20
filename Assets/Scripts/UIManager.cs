@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public GameObject mainMenu;
     public GameObject manualMenu;
     public GameObject prestartMenu;
+    public GameObject creditsMenu;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class UIManager : MonoBehaviour
     {
         mainMenu.SetActive(true);
         manualMenu.SetActive(false);
+        creditsMenu.SetActive(false);
     }
 
     // Call this to show Manual Menu and hide Main Menu
@@ -27,6 +29,15 @@ public class UIManager : MonoBehaviour
     {
         mainMenu.SetActive(false);
         manualMenu.SetActive(true);
+        creditsMenu.SetActive(false);
+    }
+
+    // Call this to show Credits Menu and hide Main Menu
+    public void ShowCreditsMenu()
+    {
+        mainMenu.SetActive(false);
+        manualMenu.SetActive(false);
+        creditsMenu.SetActive(true);
     }
 
     // Call this to show Manual Menu and hide Main Menu
@@ -34,6 +45,7 @@ public class UIManager : MonoBehaviour
     {
         mainMenu.SetActive(false);
         manualMenu.SetActive(false);
+        creditsMenu.SetActive(false);
         prestartMenu.SetActive(true);
     }
 

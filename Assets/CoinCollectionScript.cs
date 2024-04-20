@@ -10,13 +10,13 @@ public class CoinCollectionScript : MonoBehaviour
     private AudioSource coinSound;
     private bool markForDeletion;
     private bool collided;
+    public GameObject AJ;
     void OnTriggerEnter(Collider c)
     {
         if (c.CompareTag("Player") && !collided)
         {
-            int score = int.Parse(scoreText.text.Substring(7)); // ignore "score: " for parse
-            score += scorePerCoin;
-            scoreText.text = "Score: " + score.ToString();
+            AJ.GetComponent<AJ_controller_Script>().score += scorePerCoin;
+            scoreText.text = "Score: " + AJ.GetComponent<AJ_controller_Script>().score.ToString();
             coinSound.Play(0);
             GetComponent<MeshRenderer>().enabled = false;
             collided = true;

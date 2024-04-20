@@ -34,6 +34,7 @@ public class AJ_controller_Script : MonoBehaviour
     public AudioClip spraySound;
     public GameObject gameOverCanvas;
     public TMPro.TextMeshProUGUI finalScoreText;
+    public int score = 0; // Initialize the score
 
     private CharacterController controller;
     private Animator animator;
@@ -43,7 +44,7 @@ public class AJ_controller_Script : MonoBehaviour
     private bool hasRedCan;
     private bool hasBlueCan;
     private bool hasGreenCan;
-    private int score = 0; // Initialize the score
+    
     private bool isGameOver = false;
 
     void Start()
