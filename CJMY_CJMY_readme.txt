@@ -59,7 +59,7 @@ Added two raycasting rays to represent eyes that look 50 meters straight.  The c
 - Added spray paint collectables for collecting in-game
 - Created the code to utilize the states for both the enemy and player and trigger the chase interactions
 - Architected the game and led the meetings
-Files:
+Files(contributions or created):
 * UIManager.cs
 * PlayerState.cs
 * EnemyVision.cs
@@ -71,7 +71,9 @@ Martin
 Added Raptor chasing player, added mesh collider to relevant assets, removed rigidbody from main character due to rigidbody controlled by script. Added base collector(coin collector script) for coin collector mechanics. Added 5 way points to raptor AI (around the pool). Made Raycasting for raptors to follow player when player gets close. Added temporary raptor model and worked on making model animating correct way. Did a lot of project merging across various branches.
 - Refactored Raycast for NPC and integrated into main AI code, instead of a separate file originally by Cedric.
 - Senior Developer of the group and aided in debugging and refactoring code
-Files:
+- Added Cop animation for donut throwing and mechanic 
+
+Files(contributions or created):
 * SprayCan Prefab as well
 * NPC AI States
 * NEWSPRAYCAN.prefab
@@ -79,6 +81,14 @@ Files:
 * WaypointChase.cs
 * itemCollector.cs
 * itemPickup.cs
+* ReceiveDamage.cs
+* DonutProjectile.prefab
+* ProjectileScript.cs
+* AJ ThrowDonut3.anim 
+* ThrowDonutTest.cs
+* PoliceAIWaypoint.cs
+* PlayerFollowCamera.prefab
+* Spraycan.prefab
 
 
 
@@ -91,7 +101,7 @@ Added the in-game UI with an objective field (to be updated in the future) as we
 - Fixed NPC animation
 - Coin asset
 - Made graffiti change color
-Files:  
+Files(contributions or created):  
 * Canvas for in-game GUI
 * Debugged NavMesh and Waypoints
 * WaypointChase.cs
@@ -106,7 +116,7 @@ Yoandry Sosa
 Added main character model, created animation controller and parameters used in the controller, also created forward blend tree with motion animations for the character including (idle, walk, run, turn left, turn right, walking right and left turns, running right and left turns, and jump which is not yet an action that the character can do) and backward blend tree (with backward walk and run). Created the spray can, the particle spray for the can, and the materials used for both in unity. Implemented the first graffiti template for use, adding the light to mark the spot of animation which will not be completed until later stages in the game, but demonstrates the logic and purpose of the game. Created the Spray animation in the animator by blending animations enabling and disabling features in the game to hide and show objects during the animation process. Wrote the character control script with all main character and object animations, this includes: the code for the main character blend tree, the code for enabling and disabling game objects, and character position controls (spray can, green spray, graffiti, etc.), and the code to design hotkeys to animate the character or switch between walk and run.
 - Helped debug GitHub issues from merging
 Worked on the AJ Character Animations in the AJ Character folder
-Files:
+Files(contributions or created):
 * AJ_controller_Script.cs
 * AutonomousMovement.cs
 * Created Spray Can using primitives
